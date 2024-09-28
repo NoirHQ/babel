@@ -1,0 +1,15 @@
+.card-border {
+	border-color: theme('colors.gray.100');
+}
+
+.card-border:hover {
+	border-color: color-mix(in srgb, theme('colors.gray.400'), transparent 92%);
+}
+
+.card-border:focus-within {
+	border-color: color-mix(in srgb, theme('colors.gray.400'), transparent 76%);
+}
+
+:where(.dark) .card-border {
+	border-color: theme('colors.gray.800');
+}
