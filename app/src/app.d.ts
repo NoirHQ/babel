@@ -8,6 +8,27 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 	}
+
+	declare interface Window {
+		grecaptcha?: Captcha;
+		captchaLoaded: () => void;
+		onToken: (token: string) => void;
+		onExpiredToken: () => void;
+	}
+}
+
+interface Captcha {
+	render: (
+		element: string,
+		key: {
+			sitekey: string;
+			callback?: string;
+			'expired-callback'?: string;
+			theme?: 'light' | 'dark';
+			size?: 'normal' | 'compact';
+		}
+	) => void;
+	getResponse: () => string;
 }
 
 export {};
