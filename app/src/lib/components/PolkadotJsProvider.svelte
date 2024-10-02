@@ -4,22 +4,26 @@
 
 	export let endpoint = 'ws://localhost:9944';
 
-	const provider = new WsProvider(endpoint);
+	(async () => {
+		const provider = new WsProvider(endpoint, false);
 
-	ApiPromise.create({
-		provider,
-		types: {
-			VarAddress: {
-				_enum: {
-					Polkadot: 'AccountId32',
-					Cosmos: '[u8; 20]',
-					Ethereum: '[u8; 20]'
+		await provider.connect();
+		if (provider.isConnected) {
+			const api = await ApiPromise.create({
+				provider,
+				types: {
+					VarAddress: {
+						_enum: {
+							Polkadot: 'AccountId32',
+							Cosmos: '[u8; 20]',
+							Ethereum: '[u8; 20]'
+						}
+					}
 				}
-			}
+			});
+			polkadotJsApi.set(api);
 		}
-	}).then((api) => {
-		polkadotJsApi.set(api);
-	});
+	})();
 </script>
 
 <slot />
