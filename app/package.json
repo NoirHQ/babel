@@ -13,6 +13,8 @@
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
+		"@polkadot/api": "^13.2.1",
+		"@scure/base": "^1.1.9",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
@@ -21,6 +23,7 @@
 		"eslint": "^9.0.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.36.0",
+		"ethers": "^6.13.3",
 		"flowbite": "^2.5.1",
 		"flowbite-svelte": "^0.46.17",
 		"flowbite-svelte-icons": "^1.6.1",

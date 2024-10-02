@@ -64,7 +64,7 @@
 		{role}
 		aria-label={ariaLabel}
 		aria-describedby={hasDescription ? ariaDescribedby : undefined}
-		viewBox="0 0 24 24"
+		viewBox="0 0 24 22"
 		on:click
 		on:keydown
 		on:keyup
@@ -96,7 +96,7 @@
 		{role}
 		aria-label={ariaLabel}
 		aria-describedby={hasDescription ? ariaDescribedby : undefined}
-		viewBox="0 0 24 24"
+		viewBox="0 0 24 22"
 	>
 		{#if title.id && title.title}
 			<title id={title.id}>{title.title}</title>

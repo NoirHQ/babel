@@ -1,8 +1,9 @@
 <script lang="ts">
 	import type { Currency } from '$lib/components';
 	import { AngleDownOutline } from 'flowbite-svelte-icons';
+	import { twMerge } from 'tailwind-merge';
 	import { TokenLogo } from '$lib/components';
-	import { modalOpen, onSelectCurrency as callback } from './store';
+	import { openCurrencySelector, onSelectCurrency as callback } from '$lib/store';
 
 	export let onSelectCurrency = (selected: Currency) => {
 		currency = selected;
@@ -14,12 +15,15 @@
 
 	function openModal() {
 		callback.set(onSelectCurrency);
-		modalOpen.set(true);
+		openCurrencySelector.set(true);
 	}
 </script>
 
 <button
-	class="flex items-center rounded-b-2xl bg-gray-100 p-0 dark:bg-gray-800"
+	class={twMerge(
+		'flex items-center rounded-b-2xl bg-gray-100 p-0 dark:bg-gray-800',
+		$$props.class
+	)}
 	on:click={openModal}
 >
 	<div class="flex w-full items-center justify-center p-4 hover:bg-gray-400 hover:bg-opacity-5">

@@ -23,8 +23,9 @@
 
 <Modal
 	title="Select a token"
-	class="h-auto overflow-hidden border border-white border-opacity-10 md:w-[400px]
-	dark:divide-white dark:divide-opacity-10 dark:border-white dark:border-opacity-10 dark:bg-gray-900"
+	class="h-auto overflow-hidden rounded-none rounded-t-2xl border border-white
+	border-opacity-10 md:w-[400px] md:rounded-b-2xl dark:divide-white
+	dark:divide-opacity-10 dark:border-white dark:border-opacity-10 dark:bg-gray-900"
 	bind:open
 	{placement}
 	autoclose

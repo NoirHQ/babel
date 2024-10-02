@@ -4,7 +4,7 @@
 	import { ArrowDownOutline } from 'flowbite-svelte-icons';
 	import { TabItem } from '$lib/components';
 	import SwapCurrencyInput from './SwapCurrencyInput.svelte';
-	import { account } from './store';
+	import { account, openAccountModal } from '$lib/store';
 
 	export let open = false;
 
@@ -68,6 +68,7 @@
 				class="overflow-hidden rounded-2xl bg-opacity-20 p-0 text-xl
 				font-medium text-primary-600 hover:bg-opacity-20 dark:bg-opacity-20
 				dark:hover:bg-opacity-20"
+				on:click={() => ($openAccountModal = true)}
 			>
 				<div class="w-full p-4 hover:bg-gray-400 hover:bg-opacity-5">Sign in</div></Button
 			>

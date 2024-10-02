@@ -4,7 +4,7 @@
 	import { AngleDownOutline } from 'flowbite-svelte-icons';
 	import { twMerge } from 'tailwind-merge';
 	import { TokenLogo } from '$lib/components';
-	import { modalOpen, onSelectCurrency as callback } from './store';
+	import { openCurrencySelector, onSelectCurrency as callback } from '$lib/store';
 
 	export let onSelectCurrency = (selected: Currency) => {
 		currency = selected;
@@ -19,7 +19,7 @@
 
 	function openModal() {
 		callback.set(onSelectCurrency);
-		modalOpen.set(true);
+		openCurrencySelector.set(true);
 	}
 </script>
 
