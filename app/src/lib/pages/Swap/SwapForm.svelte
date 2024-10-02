@@ -2,7 +2,7 @@
 	import type { Currency } from '$lib/components';
 	import { Button } from 'flowbite-svelte';
 	import { ArrowDownOutline } from 'flowbite-svelte-icons';
-	import { TabItem } from './common';
+	import { TabItem } from '$lib/components';
 	import SwapCurrencyInput from './SwapCurrencyInput.svelte';
 	import { account } from './store';
 

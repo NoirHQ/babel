@@ -1,8 +1,6 @@
 <script lang="ts">
 	import type { Currency } from '$lib/components';
-	import { Button } from 'flowbite-svelte';
 	import { AngleDownOutline } from 'flowbite-svelte-icons';
-	import { twMerge } from 'tailwind-merge';
 	import { TokenLogo } from '$lib/components';
 	import { modalOpen, onSelectCurrency as callback } from './store';
 

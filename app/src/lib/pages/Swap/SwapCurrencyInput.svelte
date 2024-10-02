@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Currency } from '$lib/components';
-	import { GrayCard, NumericalInput } from './common';
+	import { GrayCard, NumericalInput } from '$lib/components';
 	import SwapCurrencySelectorButton from './SwapCurrencySelectorButton.svelte';
 
 	export let label = '';

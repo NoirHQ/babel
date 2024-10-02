@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from 'flowbite-svelte';
-	import { GrayCard, NumericalInput, TabItem } from './common';
+	import { GrayCard, NumericalInput, TabItem } from '$lib/components';
 	import SendCurrencySelectorButton from './SendCurrencySelectorButton.svelte';
 	import { account } from './store';
 
