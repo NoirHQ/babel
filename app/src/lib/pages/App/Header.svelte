@@ -26,7 +26,8 @@
 	let routes = [
 		{ url: '/', text: 'Trade' },
 		{ url: '#', text: 'Pool🚧' },
-		{ url: '/faucet', text: 'Faucet' }
+		{ url: '/faucet', text: 'Faucet' },
+		{ url: '/chain', text: 'Chain' }
 	];
 </script>
 
