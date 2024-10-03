@@ -1,17 +1,19 @@
+import { PUBLIC_COSMOS_CHAIN_ID } from '$env/static/public';
+
 const coinDenom = 'ZIG';
 const coinMinimalDenom = 'azig';
 const coinGeckoId = 'ziggurat';
 const coinDecimals = 18;
 
 const currencies = {
-    coinDenom,
-    coinMinimalDenom,
-    coinDecimals,
-    coinGeckoId,
+	coinDenom,
+	coinMinimalDenom,
+	coinDecimals,
+	coinGeckoId
 };
 
 const config = {
-    chainId: 'ziggurat-1',
+    chainId: PUBLIC_COSMOS_CHAIN_ID,
     chainName: 'Ziggurat',
     rpc: 'http://localhost:1317',
     rest: 'http://localhost:1317',
@@ -43,13 +45,15 @@ const config = {
 };
 
 export async function suggestChain() {
-    if (!globalThis.keplr) {
-        window.open('https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap');
-    }
+	if (!globalThis.keplr) {
+		window.open(
+			'https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap'
+		);
+	}
 
-    try {
-       await globalThis.keplr.experimentalSuggestChain(config);
-    } catch (e: any) {
-        console.error(e);
-    }
+	try {
+		await globalThis.keplr.experimentalSuggestChain(config);
+	} catch (e: any) {
+		console.error(e);
+	}
 }

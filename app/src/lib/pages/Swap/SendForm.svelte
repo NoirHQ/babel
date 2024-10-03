@@ -6,6 +6,7 @@
 	import { bech32 } from '@scure/base';
 	import { ethers } from 'ethers';
 	import babel from '$lib/babel.json';
+	import { parseAmount } from '$lib/utils';
 	import { transfer } from './services/cosmos';
 
 	export let open = false;
@@ -17,6 +18,8 @@
 	function checkAmount(amount: string) {
 		if (amount === '') {
 			return 'Input amount';
+		} else if (/^[0-9]+[.]?[0-9]{0,18}$/.test(amount) === false) {
+			return 'Invalid amount';
 		}
 		return '';
 	}
@@ -29,8 +32,7 @@
 	}
 
 	function send() {
-		// XXX: Should handle flaoting point numbers in a safer way.
-		const value = '0x' + (BigInt(amount) * BigInt(1e18)).toString(16);
+		const value = parseAmount(amount);
 		if ($accountProvider?.type === 'polkadot') {
 			if ($api === null) {
 				return;
@@ -115,8 +117,8 @@
 		{#if $account === null}
 			<Button
 				size="xl"
-				class="text-primary-600 overflow-hidden rounded-2xl bg-opacity-20 p-0
-				text-xl font-medium hover:bg-opacity-20 dark:bg-opacity-20
+				class="overflow-hidden rounded-2xl bg-opacity-20 p-0 text-xl
+				font-medium text-primary-600 hover:bg-opacity-20 dark:bg-opacity-20
 				dark:hover:bg-opacity-20"
 				on:click={() => ($openAccountModal = true)}
 			>

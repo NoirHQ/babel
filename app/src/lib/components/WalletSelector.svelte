@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { Avatar } from 'flowbite-svelte';
 	import { account, accountProvider } from '$lib/store';
+	import { PUBLIC_COSMOS_CHAIN_ID } from '$env/static/public';
 
 	export let open = false;
 
@@ -52,13 +53,12 @@
 	}
 
 	async function enableCosmos(provider) {
-		const chainId = 'ziggurat-1';
-		await window.keplr.enable(chainId);
+		await window.keplr.enable(PUBLIC_COSMOS_CHAIN_ID);
 		accountProvider.set({
 			type: 'cosmos',
 			provider
 		});
-		const offlineSigner = window.keplr.getOfflineSigner(chainId);
+		const offlineSigner = window.keplr.getOfflineSigner(PUBLIC_COSMOS_CHAIN_ID);
 		const accounts = await offlineSigner.getAccounts();
 		if (accounts.length > 0) {
 			account.set(accounts[0].address);
