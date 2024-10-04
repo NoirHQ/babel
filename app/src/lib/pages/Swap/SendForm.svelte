@@ -6,6 +6,12 @@
 	import { bech32 } from '@scure/base';
 	import { ethers } from 'ethers';
 	import babel from '$lib/babel.json';
+	import { MsgSend } from 'cosmjs-types/cosmos/bank/v1beta1/tx';
+	import { Tx, TxBody, AuthInfo, TxRaw } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
+	import { SignMode } from 'cosmjs-types/cosmos/tx/signing/v1beta1/signing';
+	import { PubKey } from 'cosmjs-types/cosmos/crypto/secp256k1/keys';
+	import Long from 'long';
+	import { type BroadcastMode } from '@keplr-wallet/types';
 
 	export let open = false;
 
@@ -46,6 +52,104 @@
 				signer: $accountProvider.provider.signer
 			});
 		} else if ($accountProvider?.type === 'cosmos') {
+			if (recipient.startsWith('cosmos1')) {
+				(async () => {
+					const chainId = 'ziggurat-1';
+					const msg = MsgSend.fromPartial({
+						fromAddress: $account,
+						toAddress: recipient,
+						amount: [
+							{
+								denom: 'azig',
+								amount: BigInt(value).toString()
+							}
+						]
+					});
+					const body = TxBody.fromPartial({
+						messages: [
+							{
+								typeUrl: MsgSend.typeUrl,
+								value: MsgSend.encode(msg).finish()
+							}
+						]
+					});
+
+					const offlineSigner = $accountProvider.provider.getOfflineSigner(chainId);
+					const accounts = await offlineSigner.getAccounts();
+					const response = await (
+						await fetch(
+							`http://localhost:1317/cosmos/auth/v1beta1/accounts/${$account}`
+						)
+					).json();
+					const { sequence } = response.account;
+					const signerInfos = [
+						{
+							publicKey: {
+								typeUrl: PubKey.typeUrl,
+								value: PubKey.fromPartial({ key: accounts[0].pubkey })
+							},
+							modeInfo: {
+								single: {
+									mode: SignMode.SIGN_MODE_DIRECT
+								}
+							},
+							sequence: BigInt(sequence)
+						}
+					];
+					const fee = {
+						amount: [
+							{
+								denom: 'azig',
+								amount: '320000000'
+							}
+						],
+						gas: '320000000'
+					};
+					const authInfo = AuthInfo.fromPartial({
+						signerInfos,
+						fee
+					});
+
+					const tx = Tx.fromPartial({
+						body,
+						authInfo
+					});
+					const txBytes = Tx.encode(tx).finish();
+					const txRaw = TxRaw.decode(txBytes);
+
+					const { signatures } = await $accountProvider.provider.signDirect(
+						chainId,
+						$account,
+						{
+							bodyBytes: txRaw.bodyBytes,
+							authInfoBytes: txRaw.authInfoBytes,
+							chainId,
+							accountNumber: Long.fromNumber(0)
+						}
+					);
+
+					tx.signatures = signatures;
+
+					const result = await $accountProvider.provider.snedTx(
+						chainId,
+						Tx.encode(tx).finish(),
+						BroadcastMode.Sync
+					);
+
+					console.log(result);
+				})();
+			} else {
+				if ($api === null) {
+					return;
+				}
+				let to;
+				if (recipient.startsWith('0x')) {
+					to = { Ethereum: recipient };
+				} else {
+					to = { Polkadot: recipient };
+				}
+				const call = $api?.tx.babel.transfer(to, value).inner.toHex();
+			}
 		} else if ($accountProvider?.type === 'ethereum') {
 			if (recipient.startsWith('0x')) {
 				$accountProvider.provider.request({
@@ -107,8 +211,8 @@
 		{#if $account === null}
 			<Button
 				size="xl"
-				class="overflow-hidden rounded-2xl bg-opacity-20 p-0 text-xl
-				font-medium text-primary-600 hover:bg-opacity-20 dark:bg-opacity-20
+				class="text-primary-600 overflow-hidden rounded-2xl bg-opacity-20 p-0
+				text-xl font-medium hover:bg-opacity-20 dark:bg-opacity-20
 				dark:hover:bg-opacity-20"
 				on:click={() => ($openAccountModal = true)}
 			>

@@ -13,6 +13,7 @@
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
+		"@keplr-wallet/types": "^0.12.130",
 		"@polkadot/api": "^13.2.1",
 		"@scure/base": "^1.1.9",
 		"@sveltejs/adapter-auto": "^3.0.0",
@@ -20,6 +21,7 @@
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@types/eslint": "^9.6.0",
 		"autoprefixer": "^10.4.20",
+		"cosmjs-types": "^0.9.0",
 		"eslint": "^9.0.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.36.0",
@@ -28,6 +30,7 @@
 		"flowbite-svelte": "^0.46.17",
 		"flowbite-svelte-icons": "^1.6.1",
 		"globals": "^15.0.0",
+		"long": "^5.2.3",
 		"prettier": "^3.1.1",
 		"prettier-plugin-svelte": "^3.1.2",
 		"prettier-plugin-tailwindcss": "^0.6.5",

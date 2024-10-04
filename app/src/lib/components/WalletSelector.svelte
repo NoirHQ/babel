@@ -52,7 +52,7 @@
 	}
 
 	async function enableCosmos(provider) {
-		const chainId = 'cosmoshub-4';
+		const chainId = 'ziggurat-1';
 		await window.keplr.enable(chainId);
 		accountProvider.set({
 			type: 'cosmos',
