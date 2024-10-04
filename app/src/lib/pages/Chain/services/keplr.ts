@@ -11,7 +11,7 @@ const currencies = {
 };
 
 const config = {
-    chainId: 'ziggurat',
+    chainId: 'ziggurat-1',
     chainName: 'Ziggurat',
     rpc: 'http://localhost:1317',
     rest: 'http://localhost:1317',
