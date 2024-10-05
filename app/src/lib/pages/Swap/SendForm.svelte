@@ -7,11 +7,10 @@
 	import { ethers } from 'ethers';
 	import babel from '$lib/babel.json';
 	import { MsgSend } from 'cosmjs-types/cosmos/bank/v1beta1/tx';
-	import { Tx, TxBody, AuthInfo, TxRaw } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
-	import { SignMode } from 'cosmjs-types/cosmos/tx/signing/v1beta1/signing';
-	import { PubKey } from 'cosmjs-types/cosmos/crypto/secp256k1/keys';
-	import Long from 'long';
-	import { type BroadcastMode } from '@keplr-wallet/types';
+	import { TxRaw } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
+	import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
+	import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx';
+	import { Buffer } from 'buffer';
 
 	export let open = false;
 
@@ -52,104 +51,117 @@
 				signer: $accountProvider.provider.signer
 			});
 		} else if ($accountProvider?.type === 'cosmos') {
-			if (recipient.startsWith('cosmos1')) {
-				(async () => {
+			(async () => {
+				try {
 					const chainId = 'ziggurat-1';
-					const msg = MsgSend.fromPartial({
-						fromAddress: $account,
-						toAddress: recipient,
-						amount: [
-							{
-								denom: 'azig',
-								amount: BigInt(value).toString()
-							}
-						]
-					});
-					const body = TxBody.fromPartial({
-						messages: [
-							{
-								typeUrl: MsgSend.typeUrl,
-								value: MsgSend.encode(msg).finish()
-							}
-						]
-					});
-
 					const offlineSigner = $accountProvider.provider.getOfflineSigner(chainId);
-					const accounts = await offlineSigner.getAccounts();
-					const response = await (
+					const client = await SigningCosmWasmClient.offline(offlineSigner);
+					const {
+						account: { sequence }
+					} = await (
 						await fetch(
 							`http://localhost:1317/cosmos/auth/v1beta1/accounts/${$account}`
 						)
 					).json();
-					const { sequence } = response.account;
-					const signerInfos = [
-						{
-							publicKey: {
-								typeUrl: PubKey.typeUrl,
-								value: PubKey.fromPartial({ key: accounts[0].pubkey })
-							},
-							modeInfo: {
-								single: {
-									mode: SignMode.SIGN_MODE_DIRECT
-								}
-							},
-							sequence: BigInt(sequence)
-						}
-					];
-					const fee = {
-						amount: [
-							{
-								denom: 'azig',
-								amount: '320000000'
-							}
-						],
-						gas: '320000000'
+					const signerData = {
+						accountNumber: 0,
+						sequence: parseInt(sequence),
+						chainId
 					};
-					const authInfo = AuthInfo.fromPartial({
-						signerInfos,
-						fee
-					});
 
-					const tx = Tx.fromPartial({
-						body,
-						authInfo
-					});
-					const txBytes = Tx.encode(tx).finish();
-					const txRaw = TxRaw.decode(txBytes);
+					if (recipient.startsWith('cosmos1')) {
+						const sendMsg = {
+							typeUrl: MsgSend.typeUrl,
+							value: {
+								fromAddress: $account,
+								toAddress: recipient,
+								amount: [{ denom: 'azig', amount: BigInt(value).toString() }]
+							}
+						};
+						const fee = {
+							amount: [
+								{
+									denom: 'azig',
+									amount: '320000000'
+								}
+							],
+							gas: '320000000'
+						};
 
-					const { signatures } = await $accountProvider.provider.signDirect(
-						chainId,
-						$account,
-						{
-							bodyBytes: txRaw.bodyBytes,
-							authInfoBytes: txRaw.authInfoBytes,
+						const txRaw = await client.sign($account!, [sendMsg], fee, '', signerData);
+						const txBytes = TxRaw.encode(txRaw).finish();
+						const hash = await $accountProvider.provider.sendTx(
 							chainId,
-							accountNumber: Long.fromNumber(0)
+							txBytes,
+							'sync'
+						);
+
+						console.log(`hash: 0x${Buffer.from(hash).toString('hex')}`);
+					} else {
+						if ($api === null) {
+							return;
 						}
-					);
+						let to;
+						if (recipient.startsWith('0x')) {
+							to = { Ethereum: recipient };
+						} else {
+							to = { Polkadot: recipient };
+						}
+						const contract =
+							'cosmos1d4hkgmryd9ehqct5vd5qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqel3ghf';
+						let call = $api?.tx.babel.transfer(to, value).inner.toHex();
+						call = Buffer.from(
+							call.startsWith('0x') ? call.slice(2) : call,
+							'hex'
+						).toString('base64');
 
-					tx.signatures = signatures;
+						const executeMsg = {
+							typeUrl: MsgExecuteContract.typeUrl,
+							value: {
+								sender: $account,
+								contract,
+								msg: Buffer.from(
+									JSON.stringify({
+										dispatch: {
+											input: call
+										}
+									}),
+									'utf8'
+								),
+								funds: []
+							}
+						};
 
-					const result = await $accountProvider.provider.snedTx(
-						chainId,
-						Tx.encode(tx).finish(),
-						BroadcastMode.Sync
-					);
+						const fee = {
+							amount: [
+								{
+									denom: 'azig',
+									amount: '360000000'
+								}
+							],
+							gas: '360000000'
+						};
 
-					console.log(result);
-				})();
-			} else {
-				if ($api === null) {
-					return;
+						const txRaw = await client.sign(
+							$account!,
+							[executeMsg],
+							fee,
+							'',
+							signerData
+						);
+						const txBytes = TxRaw.encode(txRaw).finish();
+						const hash = await $accountProvider.provider.sendTx(
+							chainId,
+							txBytes,
+							'sync'
+						);
+
+						console.log(`hash: 0x${Buffer.from(hash).toString('hex')}`);
+					}
+				} catch (e) {
+					console.error(e);
 				}
-				let to;
-				if (recipient.startsWith('0x')) {
-					to = { Ethereum: recipient };
-				} else {
-					to = { Polkadot: recipient };
-				}
-				const call = $api?.tx.babel.transfer(to, value).inner.toHex();
-			}
+			})();
 		} else if ($accountProvider?.type === 'ethereum') {
 			if (recipient.startsWith('0x')) {
 				$accountProvider.provider.request({

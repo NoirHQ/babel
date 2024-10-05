@@ -7,22 +7,22 @@
 	(async () => {
 		const provider = new WsProvider(endpoint, false);
 
-		await provider.connect();
-		if (provider.isConnected) {
-			const api = await ApiPromise.create({
-				provider,
-				types: {
-					VarAddress: {
-						_enum: {
-							Polkadot: 'AccountId32',
-							Cosmos: '[u8; 20]',
-							Ethereum: '[u8; 20]'
-						}
+		if (!provider.isConnected) {
+			await provider.connect();
+		}
+		const api = await ApiPromise.create({
+			provider,
+			types: {
+				VarAddress: {
+					_enum: {
+						Polkadot: 'AccountId32',
+						Cosmos: '[u8; 20]',
+						Ethereum: '[u8; 20]'
 					}
 				}
-			});
-			polkadotJsApi.set(api);
-		}
+			}
+		});
+		polkadotJsApi.set(api);
 	})();
 </script>
 
