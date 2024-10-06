@@ -11,6 +11,7 @@
 	import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 	import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx';
 	import { Buffer } from 'buffer';
+	import { transfer } from './services/cosmos';
 
 	export let open = false;
 
@@ -53,111 +54,7 @@
 		} else if ($accountProvider?.type === 'cosmos') {
 			(async () => {
 				try {
-					const chainId = 'ziggurat-1';
-					const offlineSigner = $accountProvider.provider.getOfflineSigner(chainId);
-					const client = await SigningCosmWasmClient.offline(offlineSigner);
-					const {
-						account: { sequence }
-					} = await (
-						await fetch(
-							`http://localhost:1317/cosmos/auth/v1beta1/accounts/${$account}`
-						)
-					).json();
-					const signerData = {
-						accountNumber: 0,
-						sequence: parseInt(sequence),
-						chainId
-					};
-
-					if (recipient.startsWith('cosmos1')) {
-						const sendMsg = {
-							typeUrl: MsgSend.typeUrl,
-							value: {
-								fromAddress: $account,
-								toAddress: recipient,
-								amount: [{ denom: 'azig', amount: BigInt(value).toString() }]
-							}
-						};
-						const fee = {
-							amount: [
-								{
-									denom: 'azig',
-									amount: '320000000'
-								}
-							],
-							gas: '320000000'
-						};
-
-						const txRaw = await client.sign($account!, [sendMsg], fee, '', signerData);
-						const txBytes = TxRaw.encode(txRaw).finish();
-						const hash = await $accountProvider.provider.sendTx(
-							chainId,
-							txBytes,
-							'sync'
-						);
-
-						console.log(`hash: 0x${Buffer.from(hash).toString('hex')}`);
-					} else {
-						if ($api === null) {
-							return;
-						}
-						let to;
-						if (recipient.startsWith('0x')) {
-							to = { Ethereum: recipient };
-						} else {
-							to = { Polkadot: recipient };
-						}
-						const contract =
-							'cosmos1d4hkgmryd9ehqct5vd5qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqel3ghf';
-						let call = $api?.tx.babel.transfer(to, value).inner.toHex();
-						call = Buffer.from(
-							call.startsWith('0x') ? call.slice(2) : call,
-							'hex'
-						).toString('base64');
-
-						const executeMsg = {
-							typeUrl: MsgExecuteContract.typeUrl,
-							value: {
-								sender: $account,
-								contract,
-								msg: Buffer.from(
-									JSON.stringify({
-										dispatch: {
-											input: call
-										}
-									}),
-									'utf8'
-								),
-								funds: []
-							}
-						};
-
-						const fee = {
-							amount: [
-								{
-									denom: 'azig',
-									amount: '360000000'
-								}
-							],
-							gas: '360000000'
-						};
-
-						const txRaw = await client.sign(
-							$account!,
-							[executeMsg],
-							fee,
-							'',
-							signerData
-						);
-						const txBytes = TxRaw.encode(txRaw).finish();
-						const hash = await $accountProvider.provider.sendTx(
-							chainId,
-							txBytes,
-							'sync'
-						);
-
-						console.log(`hash: 0x${Buffer.from(hash).toString('hex')}`);
-					}
+					await transfer($account!, recipient, value);
 				} catch (e) {
 					console.error(e);
 				}
