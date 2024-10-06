@@ -6,11 +6,6 @@
 	import { bech32 } from '@scure/base';
 	import { ethers } from 'ethers';
 	import babel from '$lib/babel.json';
-	import { MsgSend } from 'cosmjs-types/cosmos/bank/v1beta1/tx';
-	import { TxRaw } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
-	import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
-	import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx';
-	import { Buffer } from 'buffer';
 	import { transfer } from './services/cosmos';
 
 	export let open = false;
