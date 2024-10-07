@@ -11,25 +11,11 @@
 	let innerWidth = 0;
 	$: placement = (innerWidth < 768 ? 'bottom-center' : 'center') as ModalPlacementType;
 
-	$: address = truncateAddress($account);
-
 	let addresses = [];
 	$: {
 		(async () => {
 			addresses = await getMappedAddresses($account);
 		})();
-	}
-
-	function truncateAddress(address: string | null): string {
-		if (address === null) {
-			return '';
-		} else if (address.startsWith('0x')) {
-			return `${address.slice(0, 6)}...${address.slice(-4)}`;
-		} else if (address.startsWith('cosmos1')) {
-			return `${address.slice(0, 11)}...${address.slice(-4)}`;
-		} else {
-			return `${address.slice(0, 4)}...${address.slice(-4)}`;
-		}
 	}
 
 	async function fetchAddresses(accountId) {
@@ -75,7 +61,7 @@
 <svelte:window bind:innerWidth />
 
 <Modal
-	title={$account === null ? 'Connect a wallet' : address}
+	title={$account === null ? 'Connect a wallet' : 'Account Deatils'}
 	class="h-auto overflow-hidden rounded-none rounded-t-2xl border border-white border-opacity-10
 	md:w-[400px] md:rounded-b-2xl dark:divide-white dark:divide-opacity-10 dark:border-white dark:border-opacity-10 dark:bg-gray-900"
 	bind:open
