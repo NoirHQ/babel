@@ -3,6 +3,7 @@
 	import { Avatar } from 'flowbite-svelte';
 	import { account, accountProvider } from '$lib/store';
 	import { PUBLIC_COSMOS_CHAIN_ID } from '$env/static/public';
+	import { Ethereum } from '$lib/constants';
 
 	export let open = false;
 
@@ -80,7 +81,7 @@
 			await provider // Or window.ethereum if you don't support EIP-6963.
 				.request({
 					method: 'wallet_switchEthereumChain',
-					params: [{ chainId: '0x539' }]
+					params: [{ chainId: Ethereum.chainId }]
 				});
 		} catch (switchError) {
 			// This error code indicates that the chain has not been added to MetaMask.
@@ -91,9 +92,9 @@
 							method: 'wallet_addEthereumChain',
 							params: [
 								{
-									chainId: '0x539',
+									chainId: Ethereum.chainId,
 									chainName: 'Ziggurat',
-									rpcUrls: ['http://localhost:8545'],
+									rpcUrls: [Ethereum.endpoint],
 									nativeCurrency: {
 										decimals: 18,
 										name: 'Ziggurat',

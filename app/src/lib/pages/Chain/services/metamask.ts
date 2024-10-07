@@ -1,3 +1,5 @@
+import { Ethereum } from "$lib/constants";
+
 export async function addEthereumChain() {
 	if (!globalThis.ethereum) {
 		window.open(
@@ -9,12 +11,12 @@ export async function addEthereumChain() {
 		method: 'wallet_addEthereumChain',
 		params: [
 			{
-				chainId: '0x539',
+				chainId: Ethereum.chainId,
 				chainName: 'Ziggurat',
-				rpcUrls: ['http://localhost:8545'],
+				rpcUrls: [Ethereum.endpoint],
 				iconUrls: [],
 				nativeCurrency: {
-					name: 'ZIG',
+					name: 'Ziggurat',
 					symbol: 'ZIG',
 					decimals: 18
 				},

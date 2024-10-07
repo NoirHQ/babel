@@ -322,7 +322,7 @@ mod runtime {
 	#[runtime::pallet_index(180)]
 	pub type Cosmwasm = pallet_cosmwasm;
 
-	#[runtime::pallet_index(255)]
+	#[runtime::pallet_index(240)]
 	pub type Babel = frame_babel;
 }
 
