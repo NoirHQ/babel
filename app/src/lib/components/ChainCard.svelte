@@ -6,7 +6,9 @@
 	export let onclick;
 </script>
 
-<div class="my-2 flex w-full flex-row items-start rounded-xl bg-gray-100 p-2 dark:bg-gray-800">
+<div
+	class="my-2 flex w-full flex-row items-start rounded-xl bg-gray-100 p-2 md:px-6 md:py-4 dark:bg-gray-800"
+>
 	<div class="my-auto flex flex-1 flex-row">
 		<img src={image} class="my-auto h-8 w-8" alt={image} />
 		<p class="text-md my-auto pl-2 font-medium dark:text-white">{walletName}</p>

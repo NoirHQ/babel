@@ -16,6 +16,7 @@
 		"@cosmjs/cosmwasm-stargate": "^0.32.4",
 		"@cosmjs/stargate": "^0.32.4",
 		"@polkadot/api": "^13.2.1",
+		"@polkadot/util-crypto": "^13.1.1",
 		"@scure/base": "^1.1.9",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.0.0",

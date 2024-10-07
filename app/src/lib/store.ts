@@ -11,3 +11,8 @@ export const openCurrencySelector = writable(false);
 export const onSelectCurrency = writable((_) => {});
 
 export const polkadotJsApi = writable(null);
+
+export const toast = writable({
+	status: false,
+	message: ''
+});

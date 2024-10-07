@@ -8,7 +8,7 @@
 	export let searchTerm = '';
 	export let items = [
 		{ name: 'Ziggurat', symbol: 'ZIG' },
-		{ name: 'Bitcoin', symbol: 'BTC' }
+		{ name: 'RatCoin', symbol: 'RAT' }
 	];
 
 	let innerWidth = 0;

@@ -17,11 +17,11 @@
 		window.captchaLoaded = () => {
 			const colorTheme =
 				theme === 'auto'
-					? window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+					? document.documentElement.classList.contains('dark')
 						? 'dark'
 						: 'light'
 					: theme;
-			const mobileScreen = window.innerHeight > window.innerWidth;
+			// const mobileScreen = window.innerHeight > window.innerWidth;
 
 			if (!window.grecaptcha) {
 				captchaError = true;
@@ -31,7 +31,8 @@
 				sitekey: captchaKey,
 				theme: colorTheme,
 				callback: 'onToken',
-				size: mobileScreen ? 'compact' : 'normal',
+				//size: mobileScreen ? 'compact' : 'normal',
+				size: 'normal',
 				'expired-callback': 'onExpiredToken'
 			});
 		};

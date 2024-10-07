@@ -4,6 +4,7 @@
 	import { account, accountProvider } from '$lib/store';
 	import { PUBLIC_COSMOS_CHAIN_ID } from '$env/static/public';
 	import { Ethereum } from '$lib/constants';
+	import { ethers } from 'ethers';
 
 	export let open = false;
 
@@ -73,7 +74,7 @@
 		});
 		const accounts = await provider.request({ method: 'eth_requestAccounts' });
 		if (accounts.length > 0) {
-			account.set(accounts[0]);
+			account.set(ethers.getAddress(accounts[0]));
 		}
 		provider.on('accountsChanged', onEthereumAccountsChanged);
 
@@ -140,59 +141,64 @@
 </script>
 
 {#if wallets.polkadot.length > 0}
-	<span class="bg-gray-100 p-3 text-sm font-semibold text-black dark:bg-gray-800 dark:text-white"
-		>Polkadot</span
-	>
+	<span class="px-6 pb-2 pt-4 text-sm font-semibold text-black dark:text-white">Polkadot</span>
 {/if}
-{#each wallets.polkadot as wallet}
-	<button
-		class="px-4 py-3 hover:bg-gray-200 dark:hover:bg-gray-500"
-		on:click={() => {
-			enablePolkadot(wallet.provider);
-			open = false;
-		}}
-	>
-		<div class="flex items-center gap-3">
-			<Avatar>{Array.from(wallet.name)[0]}</Avatar>
-			<span class="font-medium">{wallet.name}</span>
-		</div>
-	</button>
-{/each}
+<div class="flex flex-col items-stretch gap-px px-4">
+	{#each wallets.polkadot as wallet}
+		<button
+			class="first:rounded-top-xl last:rounded-bottom-xl bg-gray-100 px-4 py-3
+			only:rounded-xl hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
+			on:click={() => {
+				enablePolkadot(wallet.provider);
+				open = false;
+			}}
+		>
+			<div class="flex items-center gap-3">
+				<Avatar class="bg-gray-300">{Array.from(wallet.name)[0]}</Avatar>
+				<span class="font-medium">{wallet.name}</span>
+			</div>
+		</button>
+	{/each}
+</div>
 {#if wallets.cosmos.length > 0}
-	<span class="bg-gray-100 p-3 text-sm font-semibold text-black dark:bg-gray-800 dark:text-white"
-		>Cosmos</span
-	>
+	<span class="px-6 pb-2 pt-4 text-sm font-semibold text-black dark:text-white">Cosmos</span>
 {/if}
-{#each wallets.cosmos as wallet}
-	<button
-		class="px-4 py-3 hover:bg-gray-200 dark:hover:bg-gray-500"
-		on:click={() => {
-			enableCosmos(wallet.provider);
-			open = false;
-		}}
-	>
-		<div class="flex items-center gap-3">
-			<Avatar>{Array.from(wallet.name)[0]}</Avatar>
-			<span class="font-medium">{wallet.name}</span>
-		</div>
-	</button>
-{/each}
+<div class="flex flex-col items-stretch gap-px px-4">
+	{#each wallets.cosmos as wallet}
+		<button
+			class="first:rounded-top-xl last:rounded-bottom-xl bg-gray-100 px-4 py-3
+			only:rounded-xl hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
+			on:click={() => {
+				enableCosmos(wallet.provider);
+				open = false;
+			}}
+		>
+			<div class="flex items-center gap-3">
+				<Avatar class="bg-gray-300">{Array.from(wallet.name)[0]}</Avatar>
+				<span class="font-medium">{wallet.name}</span>
+			</div>
+		</button>
+	{/each}
+</div>
 {#if wallets.ethereum.length > 0}
-	<span class="bg-gray-100 p-3 text-sm font-semibold text-black dark:bg-gray-800 dark:text-white"
+	<span class="px-6 pb-2 pt-4 text-sm font-semibold text-black dark:text-white"
 		>Ethereum (EIP-6963)</span
 	>
 {/if}
-{#each wallets.ethereum as wallet}
-	<button
-		class="px-4 py-3 hover:bg-gray-200 dark:hover:bg-gray-500"
-		on:click={() => {
-			enableEthereum(wallet.provider);
-			open = false;
-		}}
-	>
-		<div class="flex items-center gap-3">
-			<img class="h-8 w-8" src={wallet.icon} alt={wallet.name} />
-			<span class="font-medium">{wallet.name}</span>
-		</div>
-	</button>
-{/each}
+<div class="flex flex-col items-stretch gap-px px-4">
+	{#each wallets.ethereum as wallet}
+		<button
+			class="first:rounded-top-xl last:rounded-bottom-xl h-16 bg-gray-100 px-4
+			py-3 only:rounded-xl hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
+			on:click={() => {
+				enableEthereum(wallet.provider);
+				open = false;
+			}}
+		>
+			<div class="flex items-center gap-3">
+				<img class="h-8 w-8" src={wallet.icon} alt={wallet.name} />
+				<span class="font-medium">{wallet.name}</span>
+			</div>
+		</button>
+	{/each}
+</div>

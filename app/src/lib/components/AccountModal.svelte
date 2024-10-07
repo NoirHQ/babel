@@ -27,7 +27,7 @@
 <svelte:window bind:innerWidth />
 
 <Modal
-	title={$account === null ? 'Sign in' : address}
+	title={$account === null ? 'Connect a wallet' : address}
 	class="h-auto overflow-hidden rounded-none rounded-t-2xl border border-white border-opacity-10
 	md:w-[400px] md:rounded-b-2xl dark:divide-white dark:divide-opacity-10 dark:border-white dark:border-opacity-10 dark:bg-gray-900"
 	bind:open

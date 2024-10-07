@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { AppLayout, SwapContainer } from '$lib/pages';
+	import { AppLayout, MainContainer } from '$lib/pages';
 </script>
 
 <AppLayout>
-	<SwapContainer />
+	<MainContainer />
 </AppLayout>

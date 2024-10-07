@@ -1,20 +1,24 @@
 <script lang="ts">
 	import { Button } from 'flowbite-svelte';
-	import { GrayCard } from '$lib/components';
+	import { GrayCard, TokenLogo } from '$lib/components';
+	import { account } from '$lib/store';
 	import CaptchaV2 from './CaptchaV2.svelte';
 	import { PUBLIC_CAPTCHA_KEY } from '$env/static/public';
 	import { faucetRequest } from './service';
 	import Success from './Success.svelte';
 	import Error from './Error.svelte';
+	import { ethers } from 'ethers';
+	import { bech32 } from '@scure/base';
+	import { decodeAddress } from '@polkadot/util-crypto';
 
 	let assetId = -1;
-	let address = '';
+	let address = $account ?? '';
 	let token = '';
 
 	let fetchResult = '';
 	let error = '';
 
-	$: action = checkAddress(address) || checkToken(token) || 'Get some Zigs';
+	$: action = checkAddress(address) || checkToken(token) || 'Get some ZIGs';
 
 	function checkToken(token: string) {
 		if (token === '') {
@@ -23,9 +27,27 @@
 		return '';
 	}
 
+	function validateAddress(address: string): boolean {
+		try {
+			if (address.startsWith('0x')) {
+				ethers.getAddress(address);
+			} else if (address.startsWith('cosmos1')) {
+				bech32.decode(address);
+			} else {
+				decodeAddress(address);
+			}
+			return true;
+		} catch (e) {
+			console.error(e);
+			return false;
+		}
+	}
+
 	function checkAddress(address: string) {
 		if (address === '') {
 			return 'Input address';
+		} else if (!validateAddress(address)) {
+			return 'Invalid address';
 		}
 		return '';
 	}
@@ -51,14 +73,23 @@
 	{:else if fetchResult === 'error'}
 		<Error {error} />
 	{:else}
-		<form class="flex flex-col gap-1" on:submit|preventDefault={onSubmit}>
-			<GrayCard label="You will receive" class="justify-between">
+		<form class="flex flex-col gap-px" on:submit|preventDefault={onSubmit}>
+			<GrayCard label="You'll receive" class="justify-between rounded-b-none">
 				<span
 					style="field-sizing: content;"
-					class="max-w-full self-center py-14 text-7xl dark:text-white">1 Zig</span
+					class="max-w-full self-center py-14 text-7xl dark:text-white">1</span
 				>
 			</GrayCard>
-			<GrayCard label="Address" class="py-3">
+			<GrayCard class="flex items-center rounded-t-none p-0">
+				<div
+					class="flex w-full items-center justify-center p-4 hover:bg-gray-400 hover:bg-opacity-5"
+				>
+					<TokenLogo symbol="ZIG" /><span class="grow pl-3 text-left dark:text-white"
+						>ZIG
+					</span>
+				</div>
+			</GrayCard>
+			<GrayCard label="To" class="mt-[3px] py-3">
 				<input
 					class="w-full border-none bg-transparent pl-0 pt-1.5 placeholder-gray-300
 				focus:outline-none focus:ring-transparent dark:bg-transparent
@@ -68,19 +99,15 @@
 					bind:value={address}
 				/>
 			</GrayCard>
-			<div class="mb-1.5 mt-2 flex w-full justify-center">
-				<CaptchaV2
-					captchaKey={PUBLIC_CAPTCHA_KEY ?? ''}
-					on:token={onToken}
-					theme={'dark'}
-				/>
+			<div class="mb-1.5 mt-2 flex w-full flex-col items-center">
+				<CaptchaV2 captchaKey={PUBLIC_CAPTCHA_KEY ?? ''} on:token={onToken} />
 			</div>
-			{#if action !== 'Get some Zigs'}
+			{#if action !== 'Get some ZIGs'}
 				<Button
 					size="xl"
 					color="none"
-					class="rounded-2xl bg-gray-100 text-xl
-		font-medium text-gray-300 dark:bg-gray-800 dark:text-gray-600">{action}</Button
+					class="rounded-2xl bg-gray-100 text-xl font-medium text-gray-300 dark:bg-gray-800 dark:text-gray-600"
+					>{action}</Button
 				>
 			{:else}
 				<Button type="submit" size="xl" class="rounded-2xl text-xl font-medium"

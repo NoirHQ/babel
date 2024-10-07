@@ -6,7 +6,7 @@
 	import { openCurrencySelector, onSelectCurrency } from '$lib/store';
 </script>
 
-<div class="mt-16 w-full max-w-[480px] pt-6 md:pt-[68px]">
+<div class="mt-16 w-full max-w-[480px] px-2.5 pt-6 md:px-0 md:pt-[68px]">
 	<Tabs
 		tabStyle="pill"
 		defaultClass="flex flex-wrap space-x-2 rtl:space-x-reverse mb-3 px-2"

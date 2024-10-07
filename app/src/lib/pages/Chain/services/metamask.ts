@@ -1,4 +1,4 @@
-import { Ethereum } from "$lib/constants";
+import { Ethereum } from '$lib/constants';
 
 export async function addEthereumChain() {
 	if (!globalThis.ethereum) {

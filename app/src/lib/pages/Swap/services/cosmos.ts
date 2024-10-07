@@ -1,7 +1,7 @@
 import {
 	PUBLIC_COSMOS_REST as endpoint,
 	PUBLIC_COSMOS_CHAIN_ID as chainId,
-	PUBLIC_COSMOS_DISPATCH_CONTRACT as contract,
+	PUBLIC_COSMOS_DISPATCH_CONTRACT as contract
 } from '$env/static/public';
 import { accountProvider, polkadotJsApi as api } from '$lib/store';
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
@@ -35,11 +35,7 @@ const msgExecuteFee = {
 async function sequenceOf(address: string): Promise<number> {
 	const {
 		account: { sequence }
-	} = await (
-		await fetch(
-			`${endpoint}/cosmos/auth/v1beta1/accounts/${address}`
-		)
-	).json();
+	} = await (await fetch(`${endpoint}/cosmos/auth/v1beta1/accounts/${address}`)).json();
 	return parseInt(sequence);
 }
 
@@ -71,11 +67,7 @@ async function sendTokens(sender: string, recipient: string, value: string): Pro
 
 	const txRaw = await client.sign(sender, [msgSend], msgSendFee, '', signerData);
 	const txBytes = TxRaw.encode(txRaw).finish();
-	const hash = await get(accountProvider)?.provider.sendTx(
-		chainId,
-		txBytes,
-		'sync'
-	);
+	const hash = await get(accountProvider)?.provider.sendTx(chainId, txBytes, 'sync');
 
 	return `0x${Buffer.from(hash).toString('hex')}`;
 }
@@ -89,10 +81,7 @@ function transferCall(recipient: string, value: string): string {
 	}
 
 	const call = get(api)?.tx.babel.transfer(to, value).inner.toHex();
-	return Buffer.from(
-		call.startsWith('0x') ? call.slice(2) : call,
-		'hex'
-	).toString('base64');
+	return Buffer.from(call.startsWith('0x') ? call.slice(2) : call, 'hex').toString('base64');
 }
 
 async function transferBalance(sender: string, recipient: string, value: string): Promise<string> {
@@ -125,19 +114,9 @@ async function transferBalance(sender: string, recipient: string, value: string)
 		}
 	};
 
-	const txRaw = await client.sign(
-		sender,
-		[executeMsg],
-		msgExecuteFee,
-		'',
-		signerData
-	);
+	const txRaw = await client.sign(sender, [executeMsg], msgExecuteFee, '', signerData);
 	const txBytes = TxRaw.encode(txRaw).finish();
-	const hash = await get(accountProvider)?.provider.sendTx(
-		chainId,
-		txBytes,
-		'sync'
-	);
+	const hash = await get(accountProvider)?.provider.sendTx(chainId, txBytes, 'sync');
 
 	return `0x${Buffer.from(hash).toString('hex')}`;
 }

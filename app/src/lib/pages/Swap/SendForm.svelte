@@ -122,7 +122,9 @@
 				dark:hover:bg-opacity-20"
 				on:click={() => ($openAccountModal = true)}
 			>
-				<div class="w-full p-4 hover:bg-gray-400 hover:bg-opacity-5">Sign in</div></Button
+				<div class="w-full p-4 hover:bg-gray-400 hover:bg-opacity-5">
+					Connect wallet
+				</div></Button
 			>
 		{:else if action !== 'Send'}
 			<Button

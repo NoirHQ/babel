@@ -24,30 +24,30 @@
 	let open = false;
 
 	let routes = [
-		{ url: '/', text: 'Trade' },
+		{ url: '/swap', text: 'Trade' },
 		{ url: '#', text: 'Pool🚧' },
 		{ url: '/faucet', text: 'Faucet' },
-		{ url: '/chain', text: 'Chain' }
+		{ url: '/chain', text: 'Add Network' }
 	];
 </script>
 
 <Navbar
-	class="fixed start-0 top-0 z-20 mx-0 w-full border-b border-none px-3 py-2 sm:px-4 md:py-1.5
-	dark:bg-gray-900"
+	class="fixed start-0 top-0 z-20 mx-0 w-full border-b border-none bg-transparent px-3 py-2
+	sm:px-4 md:py-1.5 dark:bg-transparent"
 	fluid={true}
 >
 	<NavBrand href="/" class="p-2 text-2xl">
 		<Logo class="fill-black dark:fill-white" />
-		<Button
+		<button
 			color="alternative"
 			class="ml-3 border-none p-1 md:hidden"
-			on:click={() => (open = true)}
+			on:click|preventDefault={() => (open = true)}
 		>
-			<BarsOutline size="xl" /></Button
+			<BarsOutline size="xl" /></button
 		>
 		<span
 			class="invisible ml-2 self-center whitespace-nowrap text-xl font-semibold
-			md:visible dark:text-white">Ziggurat</span
+			md:visible dark:text-white">Babel</span
 		>
 	</NavBrand>
 	<NavUl class="grow" classUl="md:space-x-0 gap-3" {activeUrl} {activeClass} {nonActiveClass}>
@@ -64,7 +64,7 @@
 				><Avatar>{$account?.slice(0, 2)}</Avatar></Button
 			>
 		{:else}
-			<Button pill class="ml-3" on:click={() => ($openAccountModal = true)}>Sign in</Button>
+			<Button pill class="ml-3" on:click={() => ($openAccountModal = true)}>Connect</Button>
 		{/if}
 	</div>
 </Navbar>
