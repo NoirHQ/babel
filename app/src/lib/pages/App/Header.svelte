@@ -12,6 +12,7 @@
 		NavUl
 	} from 'flowbite-svelte';
 	import { BarsOutline } from 'flowbite-svelte-icons';
+	import { twMerge } from 'tailwind-merge';
 	import { AccountModal, Logo } from '$lib/components';
 	import { account, openAccountModal } from '$lib/store';
 
@@ -29,13 +30,17 @@
 		{ url: '/faucet', text: 'Faucet' },
 		{ url: '/chain', text: 'Add Network' }
 	];
+
+	let scrollY = 0;
+	$: navbarClass = twMerge(
+		scrollY < 10 ? 'bg-transparent dark:bg-transparent' : 'drop-shadow',
+		'fixed start-0 top-0 z-20 mx-0 w-full border-b border-none px-3 py-2 sm:px-4 md:py-1.5'
+	);
 </script>
 
-<Navbar
-	class="fixed start-0 top-0 z-20 mx-0 w-full border-b border-none bg-transparent px-3 py-2
-	sm:px-4 md:py-1.5 dark:bg-transparent"
-	fluid={true}
->
+<svelte:window bind:scrollY />
+
+<Navbar class={navbarClass} fluid={true}>
 	<NavBrand href="/" class="p-2 text-2xl">
 		<Logo class="fill-black dark:fill-white" />
 		<button
