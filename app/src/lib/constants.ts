@@ -1,6 +1,9 @@
+import { 
+    PUBLIC_ETHEREUM_CHAIN_ID, 
+    PUBLIC_ETHEREUM_ENDPOINT, 
+} from '$env/static/public';
+
 export namespace Ethereum {
-    export { 
-        PUBLIC_ETHEREUM_CHAIN_ID as chainId, 
-        PUBLIC_ETHEREUM_ENDPOINT as endpoint, 
-    } from '$env/static/public';
+    export const chainId = PUBLIC_ETHEREUM_CHAIN_ID;
+    export const endpoint = PUBLIC_ETHEREUM_ENDPOINT;
 }
