@@ -14,19 +14,19 @@
 {#if symbol === 'DOT'}
 	<img
 		class={twMerge('h-10 w-10', iconClass, classIcon)}
-		src="/polkadot-logo.png"
+		src="/images/polkadot-logo.png"
 		alt="Polkadot Logo"
 	/>
 {:else if symbol === 'ETH'}
 	<img
 		class={twMerge('h-10 w-10', iconClass, classIcon)}
-		src="/ethereum-eth.svg"
+		src="/images/ethereum-eth.svg"
 		alt="Ethereum Logo"
 	/>
 {:else if symbol === 'ATOM'}
 	<img
 		class={twMerge('h-10 w-10', iconClass, classIcon)}
-		src="/cosmos-atom-logo.png"
+		src="/images/cosmos-atom-logo.png"
 		alt="Cosmos Hub Logo"
 	/>
 {:else}

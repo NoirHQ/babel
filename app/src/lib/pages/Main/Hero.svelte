@@ -19,6 +19,6 @@
 
 <style>
 	.background {
-		background-image: url('/tower-of-babel.png');
+		background-image: url('/images/tower-of-babel.png');
 	}
 </style>

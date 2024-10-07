@@ -16,14 +16,14 @@
 			<p class="flex-1 text-xs text-gray-500 dark:text-gray-400">ADD NETWORK</p>
 		</div>
 		<ChainCard
-			image={'/keplr.png'}
+			image={'/images/keplr.png'}
 			walletName={'Keplr'}
 			chainName={'Ziggurat'}
 			denom={'ZIG'}
 			onclick={suggestChain}
 		/>
 		<ChainCard
-			image={'/metamask.png'}
+			image={'/images/metamask.png'}
 			walletName={'MetaMask'}
 			chainName={'Ziggurat'}
 			denom={'ZIG'}
