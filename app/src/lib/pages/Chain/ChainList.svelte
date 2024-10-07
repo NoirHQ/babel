@@ -10,10 +10,10 @@
 		You can add Ziggurat to the list of networks in your wallets.
 	</div>
 	<div class="mt-10 w-full">
-		<div class="flex w-full flex-row px-2 md:px-6">
-			<p class="flex-1 text-xs text-gray-500 dark:text-gray-400">WALLET NAME</p>
-			<p class="flex-1 text-xs text-gray-500 dark:text-gray-400">CHAIN INFO</p>
-			<p class="flex-1 text-xs text-gray-500 dark:text-gray-400">ADD NETWORK</p>
+		<div class="grid w-full grid-cols-4 px-3 md:px-6">
+			<p class="col-span-2 text-xs text-gray-500 dark:text-gray-400">WALLET NAME</p>
+			<p class="text-xs text-gray-500 dark:text-gray-400">CHAIN INFO</p>
+			<p class="text-xs text-gray-500 dark:text-gray-400">ADD NETWORK</p>
 		</div>
 		<ChainCard
 			image={'/images/keplr.png'}
