@@ -146,7 +146,7 @@
 <div class="flex flex-col items-stretch gap-px px-4">
 	{#each wallets.polkadot as wallet}
 		<button
-			class="first:rounded-top-xl last:rounded-bottom-xl bg-gray-100 px-4 py-3
+			class="bg-gray-100 px-4 py-3 first:rounded-t-xl last:rounded-b-xl
 			only:rounded-xl hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
 			on:click={() => {
 				enablePolkadot(wallet.provider);
@@ -166,7 +166,7 @@
 <div class="flex flex-col items-stretch gap-px px-4">
 	{#each wallets.cosmos as wallet}
 		<button
-			class="first:rounded-top-xl last:rounded-bottom-xl bg-gray-100 px-4 py-3
+			class="bg-gray-100 px-4 py-3 first:rounded-t-xl last:rounded-b-xl
 			only:rounded-xl hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
 			on:click={() => {
 				enableCosmos(wallet.provider);
@@ -188,8 +188,8 @@
 <div class="flex flex-col items-stretch gap-px px-4">
 	{#each wallets.ethereum as wallet}
 		<button
-			class="first:rounded-top-xl last:rounded-bottom-xl h-16 bg-gray-100 px-4
-			py-3 only:rounded-xl hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
+			class="h-16 bg-gray-100 px-4 py-3 first:rounded-t-xl
+			last:rounded-b-xl only:rounded-xl hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
 			on:click={() => {
 				enableEthereum(wallet.provider);
 				open = false;
