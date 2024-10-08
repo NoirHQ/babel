@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Currency } from '$lib/components';
+	import type { Currency } from '$lib/types';
 	import { GrayCard, NumericalInput } from '$lib/components';
 	import SwapCurrencySelectorButton from './SwapCurrencySelectorButton.svelte';
 
@@ -16,6 +16,8 @@
 				bind:value
 				class="w-0 shrink grow basis-auto p-0
 				text-4xl"
+				on:change
+				on:input
 			/>
 		</div>
 		<SwapCurrencySelectorButton bind:currency {onSelectCurrency} />

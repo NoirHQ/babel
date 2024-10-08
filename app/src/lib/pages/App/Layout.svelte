@@ -21,8 +21,8 @@
 		{/if}
 		<Toast
 			class="absolute left-0 right-0 top-0 z-50 m-auto mt-3 rounded-md"
-			bind:toastStatus={$toast.status}
-			dismissable={false}>{$toast.message}</Toast
+			bind:dismissable={$toast.dismissable}
+			bind:toastStatus={$toast.status}>{$toast.message}</Toast
 		>
 	</div>
 </PolkadotJsProvider>

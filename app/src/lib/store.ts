@@ -1,8 +1,11 @@
+import type { Writable } from 'svelte/store';
 import { writable } from 'svelte/store';
 
-export const account = writable(null);
+export const account: Writable<string | null> = writable(null);
 
 export const accountProvider = writable(null);
+
+export const addresses = writable([]);
 
 export const openAccountModal = writable(false);
 
@@ -14,5 +17,6 @@ export const polkadotJsApi = writable(null);
 
 export const toast = writable({
 	status: false,
-	message: ''
+	message: '',
+	dismissable: false
 });

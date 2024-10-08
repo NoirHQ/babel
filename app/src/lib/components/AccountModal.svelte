@@ -2,7 +2,7 @@
 	import type { ModalPlacementType } from 'flowbite-svelte';
 	import { Modal } from 'flowbite-svelte';
 	import { AccountDetails, WalletSelector } from '$lib/components';
-	import { account, polkadotJsApi as api } from '$lib/store';
+	import { account, addresses, polkadotJsApi as api } from '$lib/store';
 	import { bech32, hex } from '@scure/base';
 	import { ethers } from 'ethers';
 
@@ -11,12 +11,9 @@
 	let innerWidth = 0;
 	$: placement = (innerWidth < 768 ? 'bottom-center' : 'center') as ModalPlacementType;
 
-	let addresses = [];
-	$: {
-		(async () => {
-			addresses = await getMappedAddresses($account);
-		})();
-	}
+	$: getAddresses($account).then((res) => {
+		$addresses = res;
+	});
 
 	async function fetchAddresses(accountId) {
 		let res = [];
@@ -32,7 +29,7 @@
 		return res;
 	}
 
-	async function getMappedAddresses(address: string) {
+	async function getAddresses(address: string) {
 		if (address === null || $api === null) {
 			return [];
 		} else if (address.startsWith('0x')) {
@@ -41,7 +38,7 @@
 			if (accountId === null) return [];
 			let res = await fetchAddresses(accountId);
 			res.push(accountId);
-			return res.filter((value) => value !== address);
+			return res;
 		} else if (address.startsWith('cosmos1')) {
 			let accountId = await $api.query.addressMap.index({
 				Cosmos: bech32.fromWords(bech32.decode(address).words)
@@ -50,10 +47,12 @@
 			if (accountId === null) return [];
 			let res = await fetchAddresses(accountId);
 			res.push(accountId);
-			return res.filter((value) => value !== address);
+			return res;
 		} else {
-			let accountId = address;
-			return fetchAddresses(accountId);
+			const accountId = address;
+			let res = await fetchAddresses(accountId);
+			res.push(accountId);
+			return res;
 		}
 	}
 </script>
@@ -77,7 +76,7 @@
 		{#if $account === null}
 			<WalletSelector bind:open />
 		{:else}
-			<AccountDetails bind:open {addresses} />
+			<AccountDetails bind:open />
 		{/if}
 	</div>
 </Modal>

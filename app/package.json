@@ -15,6 +15,8 @@
 	"devDependencies": {
 		"@cosmjs/cosmwasm-stargate": "^0.32.4",
 		"@cosmjs/stargate": "^0.32.4",
+		"@ethersproject/address": "^5.7.0",
+		"@ethersproject/solidity": "^5.7.0",
 		"@polkadot/api": "^13.2.1",
 		"@polkadot/util-crypto": "^13.1.1",
 		"@scure/base": "^1.1.9",
@@ -22,6 +24,8 @@
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@types/eslint": "^9.6.0",
+		"@uniswap/sdk-core": "^5.8.1",
+		"@uniswap/v2-sdk": "^4.6.1",
 		"autoprefixer": "^10.4.20",
 		"buffer": "^6.0.3",
 		"cosmjs-types": "^0.9.0",

@@ -34,7 +34,11 @@
 		{#if symbol === 'ZIG'}
 			<Logo class={twMerge(iconClass, classIcon)} />
 		{:else if symbol === 'RAT'}
-			<img src="/images/rat.svg" alt="RatCoin Logo" class={twMerge('h-10 w-10 dark:invert', iconClass, classIcon)} />
+			<img
+				src="/images/rat.svg"
+				alt="RatCoin Logo"
+				class={twMerge('h-10 w-10 dark:invert', iconClass, classIcon)}
+			/>
 		{:else}
 			<span class={twMerge('text-sm', classLabel)}
 				>{size === 'xs' ? Array.from(symbol)[0] : symbol}</span

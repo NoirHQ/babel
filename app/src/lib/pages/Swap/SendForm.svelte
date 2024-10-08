@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { Button } from 'flowbite-svelte';
-	import { GrayCard, NumericalInput, TabItem } from '$lib/components';
 	import SendCurrencySelectorButton from './SendCurrencySelectorButton.svelte';
-	import { account, accountProvider, openAccountModal, polkadotJsApi as api } from '$lib/store';
-	import { bech32 } from '@scure/base';
 	import { ethers } from 'ethers';
-	import babel from '$lib/babel.json';
-	import { parseAmount } from '$lib/utils';
+	import { BabelPrecompile } from '$lib/abi';
+	import { GrayCard, NumericalInput, TabItem } from '$lib/components';
+	import { account, accountProvider, openAccountModal, polkadotJsApi as api } from '$lib/store';
+	import { Babel, ethersProvider, parseAmount } from '$lib/utils';
 	import { transfer } from './services/cosmos';
 
 	export let open = false;
@@ -34,18 +33,8 @@
 	function send() {
 		const value = parseAmount(amount);
 		if ($accountProvider?.type === 'polkadot') {
-			if ($api === null) {
-				return;
-			}
-			let to;
-			if (recipient.startsWith('0x')) {
-				to = { Ethereum: recipient };
-			} else if (recipient.startsWith('cosmos1')) {
-				to = { Cosmos: bech32.fromWords(bech32.decode(recipient).words) };
-			} else {
-				to = { Polkadot: recipient };
-			}
-			$api?.tx.babel.transfer(to, value).signAndSend($account, {
+			if ($api === null) return;
+			$api?.tx.babel.transfer(Babel.address(recipient), value).signAndSend($account, {
 				signer: $accountProvider.provider.signer
 			});
 		} else if ($accountProvider?.type === 'cosmos') {
@@ -69,20 +58,12 @@
 					]
 				});
 			} else {
-				if ($api === null) {
-					return;
-				}
-				let to;
-				if (recipient.startsWith('cosmos1')) {
-					to = { Cosmos: bech32.fromWords(bech32.decode(recipient).words) };
-				} else {
-					to = { Polkadot: recipient };
-				}
-				const call = $api?.tx.babel.transfer(to, value).inner.toHex();
-				new ethers.BrowserProvider($accountProvider.provider).getSigner().then((signer) => {
+				if ($api === null) return;
+				const call = $api?.tx.babel.transfer(Babel.address(recipient), value).inner.toHex();
+				ethersProvider.getSigner().then((signer) => {
 					const babelContract = new ethers.Contract(
 						'0x0000000000000000000000000000000000000400',
-						babel,
+						BabelPrecompile,
 						signer
 					);
 					// XXX: eth_call should return an actual gas fee.

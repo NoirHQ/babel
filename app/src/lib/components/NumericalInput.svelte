@@ -20,4 +20,6 @@
 	maxlength="79"
 	spellcheck="false"
 	bind:value
+	on:change
+	on:input
 />

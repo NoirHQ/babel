@@ -1,17 +1,15 @@
 <script lang="ts">
-	import type { Currency } from '$lib/components';
 	import { AngleDownOutline } from 'flowbite-svelte-icons';
 	import { twMerge } from 'tailwind-merge';
 	import { TokenLogo } from '$lib/components';
+	import { ZIG } from '$lib/constants';
 	import { openCurrencySelector, onSelectCurrency as callback } from '$lib/store';
+	import { Token } from '$lib/types';
 
-	export let onSelectCurrency = (selected: Currency) => {
+	export let onSelectCurrency = (selected: Token) => {
 		currency = selected;
 	};
-	export let currency: Currency = {
-		name: 'Ziggurat',
-		symbol: 'ZIG'
-	};
+	export let currency = ZIG;
 
 	function openModal() {
 		callback.set(onSelectCurrency);

@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Avatar } from 'flowbite-svelte';
-	import { account, accountProvider } from '$lib/store';
+	import { ethers, JsonRpcProvider } from 'ethers';
 	import { PUBLIC_COSMOS_CHAIN_ID } from '$env/static/public';
+	import { account, accountProvider } from '$lib/store';
 	import { Ethereum } from '$lib/constants';
-	import { ethers } from 'ethers';
+	import { setEthersProvider } from '$lib/utils';
 
 	export let open = false;
 
@@ -72,6 +73,7 @@
 			type: 'ethereum',
 			provider
 		});
+		setEthersProvider(new ethers.BrowserProvider(provider));
 		const accounts = await provider.request({ method: 'eth_requestAccounts' });
 		if (accounts.length > 0) {
 			account.set(ethers.getAddress(accounts[0]));

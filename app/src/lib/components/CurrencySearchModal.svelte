@@ -2,14 +2,13 @@
 	import type { ModalPlacementType } from 'flowbite-svelte';
 	import { Modal, Search } from 'flowbite-svelte';
 	import { TokenLogo } from '$lib/components';
+	import { ZIG, RAT } from '$lib/constants';
+	import { Token } from '$lib/types';
 
 	export let open = false;
-	export let onSelectCurrency = (_: any) => {};
+	export let onSelectCurrency = (_: Token) => {};
 	export let searchTerm = '';
-	export let items = [
-		{ name: 'Ziggurat', symbol: 'ZIG' },
-		{ name: 'RatCoin', symbol: 'RAT' }
-	];
+	export let items = [ZIG, RAT];
 
 	let innerWidth = 0;
 	$: placement = (innerWidth < 768 ? 'bottom-center' : 'center') as ModalPlacementType;
