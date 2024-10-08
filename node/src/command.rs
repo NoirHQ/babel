@@ -217,6 +217,7 @@ pub fn run() -> Result<()> {
 				_ => Err("Benchmarking sub-command unsupported".into()),
 			}
 		},
+		Some(Subcommand::Key(cmd)) => Ok(cmd.run(&cli)?),
 		None => {
 			let runner = cli.create_runner(&cli.run.normalize())?;
 			let collator_options = cli.run.collator_options();
