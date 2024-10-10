@@ -17,18 +17,18 @@ log = { version = "0.4", default-features = false }
 scale-info = { version = "2.11", default-features = false, features = ["derive"] }
 smallvec = "1.13"
 
-cosmos-runtime-api = { git = "https://github.com/noirhq/noir", rev = "ff2b80cf", default-features = false }
-cosmwasm-runtime-api = { git = "https://github.com/noirhq/noir", rev = "ff2b80cf", default-features = false }
-frame-babel = { git = "https://github.com/noirhq/noir", rev = "ff2b80cf", default-features = false, features = ["pallet"] }
-np-cosmos = { git = "https://github.com/noirhq/noir", rev = "ff2b80cf", default-features = false }
-np-ethereum = { git = "https://github.com/noirhq/noir", rev = "ff2b80cf", default-features = false }
-np-runtime = { git = "https://github.com/noirhq/noir", rev = "ff2b80cf", default-features = false, features = ["serde"] }
-pallet-cosmos = { git = "https://github.com/noirhq/noir", rev = "ff2b80cf", default-features = false }
-pallet-cosmos-types = { git = "https://github.com/noirhq/noir", rev = "ff2b80cf", default-features = false }
-pallet-cosmos-x-auth = { git = "https://github.com/noirhq/noir", rev = "ff2b80cf", default-features = false }
-pallet-cosmos-x-auth-signing = { git = "https://github.com/noirhq/noir", rev = "ff2b80cf", default-features = false }
-pallet-cosmwasm = { git = "https://github.com/noirhq/noir", rev = "ff2b80cf", default-features = false }
-pallet-multimap = { git = "https://github.com/noirhq/noir", rev = "ff2b80cf", default-features = false }
+cosmos-runtime-api = { git = "https://github.com/noirhq/noir", rev = "32e570b0", default-features = false }
+cosmwasm-runtime-api = { git = "https://github.com/noirhq/noir", rev = "32e570b0", default-features = false }
+frame-babel = { git = "https://github.com/noirhq/noir", rev = "32e570b0", default-features = false, features = ["pallet"] }
+np-cosmos = { git = "https://github.com/noirhq/noir", rev = "32e570b0", default-features = false }
+np-ethereum = { git = "https://github.com/noirhq/noir", rev = "32e570b0", default-features = false }
+np-runtime = { git = "https://github.com/noirhq/noir", rev = "32e570b0", default-features = false, features = ["serde"] }
+pallet-cosmos = { git = "https://github.com/noirhq/noir", rev = "32e570b0", default-features = false }
+pallet-cosmos-types = { git = "https://github.com/noirhq/noir", rev = "32e570b0", default-features = false }
+pallet-cosmos-x-auth = { git = "https://github.com/noirhq/noir", rev = "32e570b0", default-features = false }
+pallet-cosmos-x-auth-signing = { git = "https://github.com/noirhq/noir", rev = "32e570b0", default-features = false }
+pallet-cosmwasm = { git = "https://github.com/noirhq/noir", rev = "32e570b0", default-features = false }
+pallet-multimap = { git = "https://github.com/noirhq/noir", rev = "32e570b0", default-features = false }
 
 fp-evm = { git = "https://github.com/polkadot-evm/frontier", branch = "stable2407", default-features = false }
 fp-rpc = { git = "https://github.com/polkadot-evm/frontier", branch = "stable2407", default-features = false }

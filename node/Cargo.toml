@@ -24,11 +24,11 @@ log = "0.4"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 
-cosmos-rpc = { git = "https://github.com/noirhq/noir", rev = "ff2b80cf" }
-cosmos-runtime-api = { git = "https://github.com/noirhq/noir", rev = "ff2b80cf" }
-cosmwasm-rpc = { git = "https://github.com/noirhq/noir", rev = "ff2b80cf" }
-cosmwasm-runtime-api = { git = "https://github.com/noirhq/noir", rev = "ff2b80cf" }
-frame-babel = { git = "https://github.com/noirhq/noir", rev = "ff2b80cf" }
+cosmos-rpc = { git = "https://github.com/noirhq/noir", rev = "32e570b0" }
+cosmos-runtime-api = { git = "https://github.com/noirhq/noir", rev = "32e570b0" }
+cosmwasm-rpc = { git = "https://github.com/noirhq/noir", rev = "32e570b0" }
+cosmwasm-runtime-api = { git = "https://github.com/noirhq/noir", rev = "32e570b0" }
+frame-babel = { git = "https://github.com/noirhq/noir", rev = "32e570b0" }
 ziggurat-runtime = { path = "../runtime" }
 
 fc-api = { git = "https://github.com/polkadot-evm/frontier", branch = "stable2407" }
