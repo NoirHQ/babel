@@ -4,7 +4,7 @@
 	import { ArrowDownOutline } from 'flowbite-svelte-icons';
 	import { ethers } from 'ethers';
 	import { TabItem } from '$lib/components';
-	import { Ethereum } from '$lib/constants';
+	import { Ethereum, Cosmos } from '$lib/constants';
 	import SwapCurrencyInput from './SwapCurrencyInput.svelte';
 	import { IERC20, UniswapV2Router02 } from '$lib/abi';
 	import { UniswapV2 } from '$lib/constants';
@@ -19,6 +19,10 @@
 	import { CurrencyAmount, Pair, Percent, Route, Token, Trade, TradeType } from '$lib/types';
 	import { createPair, ethersProvider, parseAmount, sortTokens } from '$lib/utils';
 	import { MaxUint256 } from 'ethers';
+	import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
+	import { getExecuteDispatchCall, getSignerData } from './services/cosmos';
+	import { Buffer } from 'buffer';
+	import { TxRaw } from 'cosmjs-types/cosmos/tx/v1beta1/tx';
 
 	export let open = false;
 
@@ -213,6 +217,154 @@
 		}
 	}
 
+	async function approveAndSwapCosmosAccount(address: string, amountIn: bigint, swapTx) {
+		if ($accountProvider === null) return;
+
+		const inputContract = new ethers.Contract(route.input.address, IERC20, ethersProvider);
+		const allowance = await inputContract.allowance(address, UniswapV2.routerAddress);
+
+		if (amountIn > allowance) {
+			const approveTx = await decoratePopulatedTransaction(
+				inputContract.approve.populateTransaction(UniswapV2.routerAddress, MaxUint256),
+				100_000
+			);
+			$toast.message = 'Need to approve first. Please sign and wait...';
+			$toast.dismissable = false;
+			$toast.status = true;
+
+			let approveCall = $api.tx.babel.ethereumTransact(approveTx).inner.toHex();
+			approveCall = Buffer.from(
+				approveCall.startsWith('0x') ? approveCall.slice(2) : approveCall,
+				'hex'
+			).toString('base64');
+
+			const offlineSigner = $accountProvider?.provider.getOfflineSigner(Cosmos.chainId);
+			const client = await SigningCosmWasmClient.offline(offlineSigner);
+			const signerData = await getSignerData($account);
+			const approveMsg = getExecuteDispatchCall($account, approveCall);
+
+			const fee = {
+				amount: [
+					{
+						denom: 'azig',
+						amount: '2100000000'
+					}
+				],
+				gas: '2100000000'
+			};
+
+			const txRaw = await client.sign($account, [approveMsg], fee, '', signerData);
+			const txBytes = TxRaw.encode(txRaw).finish();
+			const hash = Buffer.from(
+				await $accountProvider?.provider.sendTx(Cosmos.chainId, txBytes, 'sync')
+			).toString('hex');
+
+			console.debug(`hash: 0x${hash}`);
+
+			const ws = new WebSocket(`${Cosmos.endpoint}/websocket`);
+			ws.binaryType = 'arraybuffer';
+
+			let inBlock = false;
+			const searchTx = JSON.stringify({
+				jsonrpc: '2.0',
+				id: 1,
+				method: 'tx_search',
+				params: {
+					query: `tx.hash='${hash}'`
+				}
+			});
+
+			ws.onmessage = async (ev) => {
+				const res = JSON.parse(Buffer.from(ev.data).toString());
+				if (res.result?.txs?.length > 0) {
+					inBlock = true;
+
+					const {
+						tx_result: { code }
+					} = res.result?.txs[0];
+
+					if (code === 0) {
+						const offlineSigner = $accountProvider?.provider.getOfflineSigner(
+							Cosmos.chainId
+						);
+						const client = await SigningCosmWasmClient.offline(offlineSigner);
+						const signerData = await getSignerData($account);
+
+						const fee = {
+							amount: [
+								{
+									denom: 'azig',
+									amount: '15000000000'
+								}
+							],
+							gas: '15000000000'
+						};
+
+						let swapCall = $api.tx.babel.ethereumTransact(swapTx).inner.toHex();
+						swapCall = Buffer.from(
+							swapCall.startsWith('0x') ? swapCall.slice(2) : swapCall,
+							'hex'
+						).toString('base64');
+
+						const swapMsg = getExecuteDispatchCall($account, swapCall);
+						const txRaw = await client.sign($account, [swapMsg], fee, '', signerData);
+						const txBytes = TxRaw.encode(txRaw).finish();
+						const hash = Buffer.from(
+							await $accountProvider?.provider.sendTx(Cosmos.chainId, txBytes, 'sync')
+						).toString('hex');
+
+						console.debug(`hash: 0x${hash}`);
+
+						ws.close();
+
+						notifySentSwapTransaction();
+					} else {
+						console.error(`Failed to approve. hash=0x${hash} error: ${code}`);
+
+						ws.close();
+					}
+				}
+
+				if (!inBlock) {
+					setTimeout(() => ws.send(searchTx), 3000);
+				}
+			};
+
+			ws.onopen = (ev) => ws.send(searchTx);
+		} else {
+			const offlineSigner = $accountProvider?.provider.getOfflineSigner(Cosmos.chainId);
+			const client = await SigningCosmWasmClient.offline(offlineSigner);
+			const signerData = await getSignerData($account);
+
+			const fee = {
+				amount: [
+					{
+						denom: 'azig',
+						amount: '15000000000'
+					}
+				],
+				gas: '15000000000'
+			};
+
+			let swapCall = $api.tx.babel.ethereumTransact(swapTx).inner.toHex();
+			swapCall = Buffer.from(
+				swapCall.startsWith('0x') ? swapCall.slice(2) : swapCall,
+				'hex'
+			).toString('base64');
+
+			const swapMsg = getExecuteDispatchCall($account, swapCall);
+			const txRaw = await client.sign($account, [swapMsg], fee, '', signerData);
+			const txBytes = TxRaw.encode(txRaw).finish();
+			const hash = Buffer.from(
+				await $accountProvider?.provider.sendTx(Cosmos.chainId, txBytes, 'sync')
+			).toString('hex');
+
+			console.debug(`hash: 0x${hash}`);
+
+			notifySentSwapTransaction();
+		}
+	}
+
 	async function decoratePopulatedTransaction(
 		promise: Promise<ContractTransaction>,
 		gasLimit: number = 21_000
@@ -220,8 +372,11 @@
 		const tx = ethers.Transaction.from(await promise);
 		// XXX
 		{
+			const accountId = $addresses.find(
+				(address) => !address.startsWith('0x') && !address.startsWith('cosmos1')
+			);
 			tx.chainId = Ethereum.chainId; // not mandatory
-			tx.nonce = (await $api.query.system.account($account)).nonce.toPrimitive();
+			tx.nonce = (await $api.query.system.account(accountId)).nonce.toPrimitive();
 			tx.gasLimit = gasLimit;
 			tx.maxFeePerGas = 500_000_000;
 		}
@@ -264,7 +419,25 @@
 				await swapped.wait();
 				updatePair(false);
 			} else if ($account.startsWith('cosmos1')) {
-				// Cosmos swap
+				const to = $addresses.find((address) => address.startsWith('0x'));
+				if (!to) console.error('Non-unified account');
+				const contract = new ethers.Contract(
+					UniswapV2.routerAddress,
+					UniswapV2Router02,
+					ethersProvider
+				);
+				const txData = await decoratePopulatedTransaction(
+					contract.swapExactTokensForTokens.populateTransaction(
+						amountIn,
+						amountOutMin,
+						[trade.route.path[0].address, trade.route.path[1].address],
+						to,
+						deadline
+					),
+					700_000
+				);
+
+				await approveAndSwapCosmosAccount(to, amountIn, txData);
 			} else {
 				if ($api === null) return;
 				const to = $addresses.find((address) => address.startsWith('0x'));
@@ -318,7 +491,25 @@
 				await swapped.wait();
 				updatePair(false);
 			} else if ($account.startsWith('cosmos1')) {
-				// Cosmos swap
+				const to = $addresses.find((address) => address.startsWith('0x'));
+				if (!to) console.error('Non-unified account');
+				const contract = new ethers.Contract(
+					UniswapV2.routerAddress,
+					UniswapV2Router02,
+					ethersProvider
+				);
+				const txData = await decoratePopulatedTransaction(
+					contract.swapExactTokensForTokens.populateTransaction(
+						amountOut,
+						amountInMax,
+						[trade.route.path[0].address, trade.route.path[1].address],
+						to,
+						deadline
+					),
+					700_000
+				);
+
+				await approveAndSwapCosmosAccount(to, amountInMax, txData);
 			} else {
 				if ($api === null) return;
 				const to = $addresses.find((address) => address.startsWith('0x'));

@@ -33,3 +33,11 @@ export namespace UniswapV2 {
 		env?.PUBLIC_UNISWAP_V2_INIT_CODE_HASH ??
 		'0xaa94b91bc27aacf711d3d7b628e82c46cd79caf4a8b36287501f6ed3f69b5552';
 }
+
+export namespace Cosmos {
+	export const endpoint = env?.PUBLIC_COSMOS_ENDPOINT ?? 'http://localhost:1317';
+	export const chainId = env?.PUBLIC_COSMOS_CHAIN_ID ?? 'ziggurat-1';
+	export const dispatch =
+		env?.PUBLIC_COSMOS_DISPATCH_CONTRACT ??
+		'cosmos1d4hkgmryd9ehqct5vd5qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqel3ghf';
+}

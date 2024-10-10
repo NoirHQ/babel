@@ -40,7 +40,7 @@
 		} else if ($accountProvider?.type === 'cosmos') {
 			(async () => {
 				try {
-					await transfer($account!, recipient, value);
+					await transfer($account, recipient, value);
 				} catch (e) {
 					console.error(e);
 				}
