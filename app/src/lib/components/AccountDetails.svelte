@@ -25,7 +25,7 @@
 		on:click={() => copyAddressToClipboard($account)}
 	>
 		<div class="flex items-center gap-3">
-			<TokenLogo symbol={tokenSymbolFromAddress($account)} />
+			<TokenLogo symbol={tokenSymbolFromAddress($account)} size="md" />
 			<span class="overflow-hidden text-ellipsis text-sm">{$account}</span>
 		</div>
 	</button>

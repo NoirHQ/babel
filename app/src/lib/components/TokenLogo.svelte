@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { Avatar } from 'flowbite-svelte';
-	import { Logo } from '$lib/components';
 	import { twMerge } from 'tailwind-merge';
 
 	export let symbol = 'ZIG';
@@ -8,41 +6,73 @@
 
 	export let classIcon = '';
 	export let classLabel = '';
-	$: iconClass = size === 'xs' ? 'h-4 w-4' : '';
+	$: divClass = twMerge(
+		containerSizes[size],
+		'overflow-hidden rounded-full bg-gray-300 dark:bg-gray-700 flex items-center justify-center',
+		$$props.class
+	);
+
+	const sizes: Record<string, string> = {
+		xs: 'w-3 h-3',
+		sm: 'w-4 h-4',
+		md: 'w-5 h-5',
+		lg: 'w-6 h-6',
+		xl: 'w-8 h-8'
+	};
+
+	const containerSizes: Record<string, string> = {
+		xs: 'w-6 h-6',
+		sm: 'w-8 h-8',
+		md: 'w-10 h-10',
+		lg: 'w-12 h-12',
+		xl: 'w-16 h-16'
+	};
+
+	const tokens: Record<string, { icon: string; name: string }> = {
+		DOT: {
+			icon: '/images/polkadot-logo.png',
+			name: 'Polkadot'
+		},
+		ETH: {
+			icon: '/images/ethereum-eth.svg',
+			name: 'Ethereum'
+		},
+		ATOM: {
+			icon: '/images/cosmos-atom-logo.png',
+			name: 'Cosmos'
+		}
+	};
+
+	const tokensWithoutBg: Record<string, { icon: string; name: string }> = {
+		ZIG: {
+			icon: '/images/ziggurat.svg',
+			name: 'Ziggurat'
+		},
+		RAT: {
+			icon: '/images/rat.svg',
+			name: 'RatCoin'
+		}
+	};
 </script>
 
-{#if symbol === 'DOT'}
+{#if tokens.hasOwnProperty(symbol)}
 	<img
-		class={twMerge('h-10 w-10', iconClass, classIcon)}
-		src="/images/polkadot-logo.png"
-		alt="Polkadot Logo"
+		class={twMerge(containerSizes[size], classIcon)}
+		src={tokens[symbol].icon}
+		alt={`${tokens[symbol].name} Logo`}
 	/>
-{:else if symbol === 'ETH'}
-	<img
-		class={twMerge('h-10 w-10', iconClass, classIcon)}
-		src="/images/ethereum-eth.svg"
-		alt="Ethereum Logo"
-	/>
-{:else if symbol === 'ATOM'}
-	<img
-		class={twMerge('h-10 w-10', iconClass, classIcon)}
-		src="/images/cosmos-atom-logo.png"
-		alt="Cosmos Hub Logo"
-	/>
+{:else if tokensWithoutBg.hasOwnProperty(symbol)}
+	<div class={divClass}>
+		<img
+			class={twMerge(sizes[size], 'dark:invert', classIcon)}
+			src={tokensWithoutBg[symbol].icon}
+			alt={`${tokensWithoutBg[symbol].name} Logo`}
+		/>
+	</div>
 {:else}
-	<Avatar {...$$restProps} class={twMerge('bg-gray-300 dark:bg-gray-700', $$props.class)} {size}>
-		{#if symbol === 'ZIG'}
-			<Logo class={twMerge(iconClass, classIcon)} />
-		{:else if symbol === 'RAT'}
-			<img
-				src="/images/rat.svg"
-				alt="RatCoin Logo"
-				class={twMerge('h-10 w-10 dark:invert', iconClass, classIcon)}
-			/>
-		{:else}
-			<span class={twMerge('text-sm', classLabel)}
-				>{size === 'xs' ? Array.from(symbol)[0] : symbol}</span
-			>
-		{/if}
-	</Avatar>
+	<div class={divClass}>
+		<span class={twMerge(`text-${size}`, classLabel)}
+			>{size === 'xs' ? Array.from(symbol)[0] : symbol}</span
+		>
+	</div>
 {/if}

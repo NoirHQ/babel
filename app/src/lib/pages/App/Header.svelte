@@ -13,7 +13,7 @@
 	} from 'flowbite-svelte';
 	import { BarsOutline } from 'flowbite-svelte-icons';
 	import { twMerge } from 'tailwind-merge';
-	import { AccountModal, Logo } from '$lib/components';
+	import { AccountModal } from '$lib/components';
 	import { account, openAccountModal } from '$lib/store';
 
 	$: activeUrl = $page.url.pathname;
@@ -42,7 +42,7 @@
 
 <Navbar class={navbarClass} fluid={true}>
 	<NavBrand href="/" class="p-2 text-2xl">
-		<Logo class="fill-black dark:fill-white" />
+		<img src="/images/ziggurat.svg" alt="Ziggurat Logo" class="h-5 w-5 dark:invert" />
 		<button
 			color="alternative"
 			class="ml-3 border-none p-1 md:hidden"
