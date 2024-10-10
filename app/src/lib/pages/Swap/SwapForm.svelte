@@ -161,11 +161,11 @@
 		}
 	}
 
-	async function approveAndSwapPolkadotAccount(address: string, amountIn: bigint, txData) {
+	async function approveAndSwapPolkadotAccount(address: string, amountIn: bigint, swapTx) {
 		const inputContract = new ethers.Contract(route.input.address, IERC20, ethersProvider);
 		const allowance = await inputContract.allowance(address, UniswapV2.routerAddress);
 		if (amountIn > allowance) {
-			const txData = await decoratePopulatedTransaction(
+			const approveTx = await decoratePopulatedTransaction(
 				inputContract.approve.populateTransaction(UniswapV2.routerAddress, MaxUint256),
 				100_000
 			);
@@ -173,14 +173,14 @@
 			$toast.dismissable = false;
 			$toast.status = true;
 			let unsub_swap = null;
-			const unsub = await $api.tx.babel.ethereumTransact(txData).signAndSend(
+			const unsub = await $api.tx.babel.ethereumTransact(approveTx).signAndSend(
 				$account,
 				{
 					signer: $accountProvider.provider.signer
 				},
 				async (result) => {
 					if (result.status.isInBlock) {
-						unsub_swap = await $api.tx.babel.ethereumTransact(txData).signAndSend(
+						unsub_swap = await $api.tx.babel.ethereumTransact(swapTx).signAndSend(
 							$account,
 							{
 								signer: $accountProvider.provider.signer
@@ -198,7 +198,7 @@
 				}
 			);
 		} else {
-			await $api.tx.babel.ethereumTransact(txData).signAndSend(
+			await $api.tx.babel.ethereumTransact(swapTx).signAndSend(
 				$account,
 				{
 					signer: $accountProvider.provider.signer
