@@ -7,4 +7,5 @@ export { default as NumericalInput } from './NumericalInput.svelte';
 export { default as PolkadotJsProvider } from './PolkadotJsProvider.svelte';
 export { default as TabItem } from './TabItem.svelte';
 export { default as TokenLogo } from './TokenLogo.svelte';
+export { default as WalletLogo } from './WalletLogo.svelte';
 export { default as WalletSelector } from './WalletSelector.svelte';

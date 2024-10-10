@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Avatar } from 'flowbite-svelte';
-	import { ethers, JsonRpcProvider } from 'ethers';
+	import { ethers } from 'ethers';
 	import { PUBLIC_COSMOS_CHAIN_ID } from '$env/static/public';
-	import { account, accountProvider } from '$lib/store';
+	import { WalletLogo } from '$lib/components';
 	import { Ethereum } from '$lib/constants';
+	import { account, accountProvider } from '$lib/store';
 	import { setEthersProvider } from '$lib/utils';
 
 	export let open = false;
@@ -156,8 +157,9 @@
 			}}
 		>
 			<div class="flex items-center gap-3">
-				<Avatar class="bg-gray-300">{Array.from(wallet.name)[0]}</Avatar>
+				<WalletLogo name={wallet.name} />
 				<span class="font-medium">{wallet.name}</span>
+				<span class="grow text-right text-xs">Detected</span>
 			</div>
 		</button>
 	{/each}
@@ -176,8 +178,9 @@
 			}}
 		>
 			<div class="flex items-center gap-3">
-				<Avatar class="bg-gray-300">{Array.from(wallet.name)[0]}</Avatar>
+				<WalletLogo name={wallet.name} />
 				<span class="font-medium">{wallet.name}</span>
+				<span class="grow text-right text-xs">Detected</span>
 			</div>
 		</button>
 	{/each}
@@ -198,8 +201,9 @@
 			}}
 		>
 			<div class="flex items-center gap-3">
-				<img class="h-8 w-8" src={wallet.icon} alt={wallet.name} />
+				<WalletLogo name={wallet.name} src={wallet.icon} variant="ethereum" />
 				<span class="font-medium">{wallet.name}</span>
+				<span class="grow text-right text-xs">Detected</span>
 			</div>
 		</button>
 	{/each}

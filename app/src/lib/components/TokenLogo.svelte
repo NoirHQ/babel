@@ -8,7 +8,7 @@
 
 	export let classIcon = '';
 	export let classLabel = '';
-	$: iconClass = size === 'xs' ? 'h-3 w-3' : '';
+	$: iconClass = size === 'xs' ? 'h-4 w-4' : '';
 </script>
 
 {#if symbol === 'DOT'}
