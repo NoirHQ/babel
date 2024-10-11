@@ -1,4 +1,4 @@
-import { PUBLIC_COSMOS_CHAIN_ID } from '$env/static/public';
+import { Cosmos } from "$lib/constants";
 
 const coinDenom = 'ZIG';
 const coinMinimalDenom = 'azig';
@@ -13,10 +13,10 @@ const currencies = {
 };
 
 const config = {
-	chainId: PUBLIC_COSMOS_CHAIN_ID,
+	chainId: Cosmos.chainId,
 	chainName: 'Ziggurat',
-	rpc: 'http://localhost:1317',
-	rest: 'http://localhost:1317',
+	rpc: Cosmos.endpoint,
+	rest: Cosmos.endpoint,
 	bip44: {
 		coinType: 118
 	},
