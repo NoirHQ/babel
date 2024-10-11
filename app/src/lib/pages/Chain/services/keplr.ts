@@ -1,4 +1,4 @@
-import { Cosmos } from "$lib/constants";
+import { Cosmos } from '$lib/constants';
 
 const coinDenom = 'ZIG';
 const coinMinimalDenom = 'azig';
