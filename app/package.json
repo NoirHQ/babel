@@ -17,7 +17,7 @@
 		"@cosmjs/stargate": "^0.32.4",
 		"@ethersproject/address": "^5.7.0",
 		"@ethersproject/solidity": "^5.7.0",
-		"@polkadot/api": "^13.2.1",
+		"@polkadot/api": "^14.0.1",
 		"@polkadot/util-crypto": "^13.1.1",
 		"@scure/base": "^1.1.9",
 		"@sveltejs/adapter-auto": "^3.0.0",
