@@ -309,7 +309,7 @@ mod runtime {
 	#[runtime::pallet_index(60)]
 	pub type Ethereum = pallet_ethereum;
 	#[runtime::pallet_index(61)]
-	pub type Evm = pallet_evm;
+	pub type EVM = pallet_evm;
 	#[runtime::pallet_index(62)]
 	pub type BaseFee = pallet_base_fee;
 
