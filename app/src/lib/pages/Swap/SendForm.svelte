@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { Button } from 'flowbite-svelte';
-	import SendCurrencySelectorButton from './SendCurrencySelectorButton.svelte';
+	// import SendCurrencySelectorButton from './SendCurrencySelectorButton.svelte';
 	import { ethers } from 'ethers';
 	import { BabelPrecompile } from '$lib/abi';
-	import { GrayCard, NumericalInput, TabItem } from '$lib/components';
+	import { GrayCard, NumericalInput, TabItem, TokenLogo } from '$lib/components';
 	import { account, accountProvider, openAccountModal, polkadotJsApi as api } from '$lib/store';
 	import { Babel, ethersProvider, parseAmount } from '$lib/utils';
 	import { transfer } from './services/cosmos';
@@ -77,14 +77,25 @@
 <TabItem {open}>
 	<span slot="title">Send</span>
 	<form class="flex flex-col gap-1">
-		<GrayCard label="You're sending" class="justify-between rounded-b-none">
-			<NumericalInput
-				bind:value={amount}
-				style="field-sizing: content;"
-				class="max-w-full self-center py-14 text-7xl"
-			/>
-		</GrayCard>
-		<SendCurrencySelectorButton class="mt-[-3px]" />
+		<div class="flex w-full flex-col gap-px">
+			<GrayCard label="You're sending" class="justify-between rounded-b-none">
+				<NumericalInput
+					bind:value={amount}
+					style="field-sizing: content;"
+					class="max-w-full self-center py-14 text-7xl"
+				/>
+			</GrayCard>
+			<!--<SendCurrencySelectorButton class="mt-[-3px]" />-->
+			<GrayCard class="flex items-center rounded-t-none p-0">
+				<div
+					class="flex w-full items-center justify-center p-4 hover:bg-gray-400 hover:bg-opacity-5"
+				>
+					<TokenLogo symbol="ZIG" /><span class="grow pl-3 text-left dark:text-white"
+						>ZIG
+					</span>
+				</div>
+			</GrayCard>
+		</div>
 		<GrayCard label="To" class="py-3">
 			<input
 				class="w-full border-none bg-transparent pl-0 pt-1.5 placeholder-gray-300
