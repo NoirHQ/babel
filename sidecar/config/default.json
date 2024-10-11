@@ -4,6 +4,7 @@
   },
   "server": {
     "endpoint": "http://localhost:1317",
+    "host": "localhost",
     "port": 1317,
     "logger": false
   },
