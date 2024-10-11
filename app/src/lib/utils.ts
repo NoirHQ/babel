@@ -2,7 +2,7 @@ import { bech32 } from '@scure/base';
 import type { Provider } from 'ethers';
 import { ethers, JsonRpcProvider } from 'ethers';
 import { IERC20, UniswapV2Pair, UniswapV2Router02 } from '$lib/abi';
-import { UniswapV2 } from '$lib/constants';
+import { Ethereum, UniswapV2 } from '$lib/constants';
 import { CurrencyAmount, Pair, Token } from '$lib/types';
 import { getCreate2Address } from '@ethersproject/address';
 import { pack, keccak256 } from '@ethersproject/solidity';
@@ -27,7 +27,7 @@ export function sortTokens(tokenA: Token, tokenB: Token): [Token, Token] {
 	return tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA];
 }
 
-export let ethersProvider: Provider = new JsonRpcProvider();
+export let ethersProvider: Provider = new JsonRpcProvider(Ethereum.endpoint);
 
 export function setEthersProvider(provider: Provider) {
 	ethersProvider = provider;
