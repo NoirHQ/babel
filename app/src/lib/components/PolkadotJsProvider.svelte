@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { ApiPromise, WsProvider } from '@polkadot/api';
+	import { Polkadot } from '$lib/constants';
 	import { polkadotJsApi } from '$lib/store';
 
-	export let endpoint = 'ws://localhost:9944';
+	export let endpoint = Polkadot.endpoint;
 
 	(async () => {
 		const provider = new WsProvider(endpoint, false);

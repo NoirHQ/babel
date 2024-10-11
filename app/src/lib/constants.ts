@@ -41,3 +41,7 @@ export namespace Cosmos {
 		env?.PUBLIC_COSMOS_DISPATCH_CONTRACT ??
 		'cosmos1d4hkgmryd9ehqct5vd5qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqel3ghf';
 }
+
+export namespace Polkadot {
+	export const endpoint = env?.PUBLIC_POLKADOT_ENDPOINT ?? 'ws://localhost:9944';
+}
