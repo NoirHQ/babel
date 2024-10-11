@@ -7,7 +7,7 @@
 	}
 </script>
 
-<div class="w-full">
+<div class="w-full px-2">
 	<div class="icon">
 		<CheckCircle />
 	</div>

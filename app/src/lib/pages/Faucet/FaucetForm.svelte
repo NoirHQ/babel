@@ -73,7 +73,7 @@
 	{:else if fetchResult === 'error'}
 		<Error {error} />
 	{:else}
-		<form class="flex flex-col gap-px" on:submit|preventDefault={onSubmit}>
+		<form class="flex flex-col gap-px px-2" on:submit|preventDefault={onSubmit}>
 			<GrayCard label="You'll receive" class="justify-between rounded-b-none">
 				<span
 					style="field-sizing: content;"
