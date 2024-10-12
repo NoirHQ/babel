@@ -350,7 +350,7 @@ impl unify_account::Config for Runtime {
 	type DrainBalance = Balances;
 }
 
-const BLOCK_GAS_LIMIT: u64 = 75_000_000;
+const BLOCK_GAS_LIMIT: u64 = 30_000_000;
 const MAX_POV_SIZE: u64 = 5 * 1024 * 1024;
 const WEIGHT_MILLISECS_PER_BLOCK: u64 = 2000;
 
