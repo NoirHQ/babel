@@ -39,7 +39,7 @@
 	let tokens: Token[] = [];
 	let pair: Pair | null = null;
 	let fetching = false;
-	let timeoutId: number = 0;
+	let timeoutId: undefined | ReturnType<typeof setTimeout>;
 
 	$: {
 		if (input && output) {
@@ -56,9 +56,9 @@
 	$: outputAmount = exactInput && pair ? getOutputAmount(pair) : outputAmount;
 
 	function updatePair(retry: boolean = false) {
-		if (retry && timeoutId !== 0) {
+		if (retry && timeoutId) {
 			clearTimeout(timeoutId);
-			timeoutId = 0;
+			timeoutId = undefined;
 		}
 		fetching = true;
 		(async () => {

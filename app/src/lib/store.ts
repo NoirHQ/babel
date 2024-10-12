@@ -5,7 +5,7 @@ export const account: Writable<string | null> = writable(null);
 
 export const accountProvider = writable(null);
 
-export const addresses = writable([]);
+export const addresses: Writable<string[]> = writable([]);
 
 export const openAccountModal = writable(false);
 

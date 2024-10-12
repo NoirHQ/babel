@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from 'flowbite-svelte';
-	// import SendCurrencySelectorButton from './SendCurrencySelectorButton.svelte';
+	import SendCurrencySelectorButton from './SendCurrencySelectorButton.svelte';
 	import { ethers } from 'ethers';
 	import { BabelPrecompile } from '$lib/abi';
 	import { GrayCard, NumericalInput, TabItem, TokenLogo } from '$lib/components';
@@ -85,8 +85,8 @@
 					class="max-w-full self-center py-14 text-7xl"
 				/>
 			</GrayCard>
-			<!--<SendCurrencySelectorButton class="mt-[-3px]" />-->
-			<GrayCard class="flex items-center rounded-t-none p-0">
+			<SendCurrencySelectorButton />
+			<!--<GrayCard class="flex items-center rounded-t-none p-0">
 				<div
 					class="flex w-full items-center justify-center p-4 hover:bg-gray-400 hover:bg-opacity-5"
 				>
@@ -94,7 +94,7 @@
 						>ZIG
 					</span>
 				</div>
-			</GrayCard>
+			</GrayCard>-->
 		</div>
 		<GrayCard label="To" class="py-3">
 			<input
