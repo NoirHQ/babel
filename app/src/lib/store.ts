@@ -3,7 +3,7 @@ import { writable } from 'svelte/store';
 
 export const account: Writable<string | null> = writable(null);
 
-export const accountProvider = writable(null);
+export const accountProvider: Writable<{ type: string; provider: any } | null> = writable(null);
 
 export const addresses: Writable<string[]> = writable([]);
 

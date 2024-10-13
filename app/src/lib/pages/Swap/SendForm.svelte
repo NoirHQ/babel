@@ -1,14 +1,15 @@
 <script lang="ts">
 	import SendCurrencySelectorButton from './SendCurrencySelectorButton.svelte';
-	import { ethers } from 'ethers';
-	import { BabelPrecompile } from '$lib/abi';
 	import { GrayCard, NumericalInput, TabItem } from '$lib/components';
 	import { Button } from '$lib/flowbite';
 	import { account, accountProvider, openAccountModal, polkadotJsApi as api } from '$lib/store';
-	import { Babel, ethersProvider, parseAmount } from '$lib/utils';
+	import { Token } from '$lib/types';
+	import { parseAmount } from '$lib/utils';
 	import { transfer } from './services/cosmos';
+	import { sendERC20 } from './services/send';
 
 	export let open = false;
+	export let currency: Token;
 
 	let amount = '';
 	let recipient = '';
@@ -33,10 +34,7 @@
 	function send() {
 		const value = parseAmount(amount);
 		if ($accountProvider?.type === 'polkadot') {
-			if ($api === null) return;
-			$api?.tx.babel.transfer(Babel.address(recipient), value).signAndSend($account, {
-				signer: $accountProvider.provider.signer
-			});
+			sendERC20(currency, recipient, value);
 		} else if ($accountProvider?.type === 'cosmos') {
 			(async () => {
 				try {
@@ -46,30 +44,7 @@
 				}
 			})();
 		} else if ($accountProvider?.type === 'ethereum') {
-			if (recipient.startsWith('0x')) {
-				$accountProvider.provider.request({
-					method: 'eth_sendTransaction',
-					params: [
-						{
-							from: $account,
-							to: recipient,
-							value
-						}
-					]
-				});
-			} else {
-				if ($api === null) return;
-				const call = $api?.tx.babel.transfer(Babel.address(recipient), value).inner.toHex();
-				ethersProvider.getSigner().then((signer) => {
-					const babelContract = new ethers.Contract(
-						'0x0000000000000000000000000000000000000400',
-						BabelPrecompile,
-						signer
-					);
-					// XXX: eth_call should return an actual gas fee.
-					babelContract.dispatch(call, { gasLimit: 100_000 });
-				});
-			}
+			sendERC20(currency, recipient, value);
 		}
 	}
 </script>
@@ -85,7 +60,7 @@
 					class="max-w-full self-center py-14 text-7xl"
 				/>
 			</GrayCard>
-			<SendCurrencySelectorButton />
+			<SendCurrencySelectorButton bind:currency />
 		</div>
 		<GrayCard label="To" class="py-3">
 			<input

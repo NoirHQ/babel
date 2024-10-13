@@ -1,7 +1,7 @@
 import { bech32 } from '@scure/base';
 import type { Provider } from 'ethers';
 import { ethers, JsonRpcProvider } from 'ethers';
-import { IERC20, UniswapV2Pair, UniswapV2Router02 } from '$lib/abi';
+import { UniswapV2Pair } from '$lib/abi';
 import { Ethereum, UniswapV2 } from '$lib/constants';
 import { CurrencyAmount, Pair, Token } from '$lib/types';
 import { getCreate2Address } from '@ethersproject/address';
@@ -34,7 +34,7 @@ export function setEthersProvider(provider: Provider) {
 }
 
 export async function createPair(tokenA: Token, tokenB: Token): Promise<Pair> {
-	const [token0, token1] = await sortTokens(tokenA, tokenB);
+	const [token0, token1] = sortTokens(tokenA, tokenB);
 
 	const pairAddress = getCreate2Address(
 		UniswapV2.factoryAddress,
@@ -65,7 +65,13 @@ export function tokenSymbolFromAddress(address: string | null): string {
 }
 
 export namespace Babel {
-	export function address(s: string) {
+	export type VarAddress = {
+		Cosmos?: string;
+		Ethereum?: string;
+		Polkadot?: string;
+	};
+
+	export function address(s: string): VarAddress {
 		if (s.startsWith('0x')) {
 			return { Ethereum: s };
 		} else if (s.startsWith('cosmos1')) {
@@ -73,5 +79,21 @@ export namespace Babel {
 		} else {
 			return { Polkadot: s };
 		}
+	}
+
+	export function denom(token: Token): string | undefined {
+		const known: Record<string, string> = {
+			ZIG: 'azig',
+			RAT: 'arat'
+		};
+		return token?.symbol ? known[token.symbol] : undefined;
+	}
+
+	export function addressToAssetId(address: string | undefined): number | null {
+		if (!address) return null;
+		let normalized = address.toLowerCase();
+		normalized = normalized.startsWith('0x') ? normalized.slice(2) : normalized;
+		if (!normalized.startsWith('ffffffff000000000000000000000000')) return null;
+		return parseInt(normalized.slice(32), 16);
 	}
 }

@@ -625,4 +625,5 @@ impl pallet_cosmwasm::Config for Runtime {
 impl frame_babel::Config for Runtime {
 	type AddressMap = AddressMap;
 	type AssetMap = AssetMap;
+	type Balance = Balance;
 }
