@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { ModalPlacementType } from 'flowbite-svelte';
-	import { Modal } from 'flowbite-svelte';
+	import type { ModalPlacementType } from '$lib/flowbite';
+	import { Modal } from '$lib/flowbite';
 	import { AccountDetails, WalletSelector } from '$lib/components';
 	import { account, addresses, polkadotJsApi as api } from '$lib/store';
 	import { bech32, hex } from '@scure/base';

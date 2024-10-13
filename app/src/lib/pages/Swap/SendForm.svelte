@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { Button } from 'flowbite-svelte';
 	import SendCurrencySelectorButton from './SendCurrencySelectorButton.svelte';
 	import { ethers } from 'ethers';
 	import { BabelPrecompile } from '$lib/abi';
-	import { GrayCard, NumericalInput, TabItem, TokenLogo } from '$lib/components';
+	import { GrayCard, NumericalInput, TabItem } from '$lib/components';
+	import { Button } from '$lib/flowbite';
 	import { account, accountProvider, openAccountModal, polkadotJsApi as api } from '$lib/store';
 	import { Babel, ethersProvider, parseAmount } from '$lib/utils';
 	import { transfer } from './services/cosmos';
@@ -86,15 +86,6 @@
 				/>
 			</GrayCard>
 			<SendCurrencySelectorButton />
-			<!--<GrayCard class="flex items-center rounded-t-none p-0">
-				<div
-					class="flex w-full items-center justify-center p-4 hover:bg-gray-400 hover:bg-opacity-5"
-				>
-					<TokenLogo symbol="ZIG" /><span class="grow pl-3 text-left dark:text-white"
-						>ZIG
-					</span>
-				</div>
-			</GrayCard>-->
 		</div>
 		<GrayCard label="To" class="py-3">
 			<input

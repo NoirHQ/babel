@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { AngleDownOutline } from 'flowbite-svelte-icons';
 	import { twMerge } from 'tailwind-merge';
 	import { ethers } from 'ethers';
 	import { IERC20 } from '$lib/abi';
 	import { TokenLogo } from '$lib/components';
 	import { ZIG } from '$lib/constants';
+	import { Icons } from '$lib/flowbite';
 	import {
 		account,
 		addresses,
@@ -67,6 +67,6 @@
 				<span class="text-sm text-gray-400 dark:text-gray-500">Balances: {balance}</span>
 			{/if}
 		</div>
-		<AngleDownOutline class="text-gray-500" />
+		<Icons.AngleDownOutline class="text-gray-500" />
 	</div>
 </button>

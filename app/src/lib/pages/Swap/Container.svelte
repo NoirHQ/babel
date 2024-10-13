@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { Tabs } from 'flowbite-svelte';
 	import SendForm from './SendForm.svelte';
 	import SwapForm from './SwapForm.svelte';
 	import { CurrencySearchModal } from '$lib/components';
+	import { Tabs } from '$lib/flowbite';
 	import { openCurrencySelector, onSelectCurrency } from '$lib/store';
 </script>
 

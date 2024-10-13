@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { ModalPlacementType } from 'flowbite-svelte';
-	import { Modal, Search } from 'flowbite-svelte';
+	import type { ModalPlacementType } from '$lib/flowbite';
 	import { TokenLogo } from '$lib/components';
 	import { ZIG, RAT } from '$lib/constants';
+	import { Modal, Search } from '$lib/flowbite';
 	import { Token } from '$lib/types';
 
 	export let open = false;

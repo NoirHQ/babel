@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { Footer, FooterCopyright, FooterIcon } from 'flowbite-svelte';
-	import { GithubSolid } from 'flowbite-svelte-icons';
+	import { Footer, FooterCopyright, FooterIcon, Icons } from '$lib/flowbite';
 </script>
 
 <Footer>
@@ -10,7 +9,7 @@
 		</div>
 		<div>
 			<FooterIcon href="https://github.com/noirhq/babel/tree/ziggurat" target="_blank">
-				<GithubSolid size="lg" />
+				<Icons.GithubSolid size="lg" />
 			</FooterIcon>
 		</div>
 	</div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, P } from 'flowbite-svelte';
+	import { Button, P } from '$lib/flowbite';
 	import CheckCircle from './icons/CheckCircle.svelte';
 
 	function onGoBack() {

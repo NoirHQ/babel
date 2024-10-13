@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { Currency } from '$lib/types';
-	import { Button } from 'flowbite-svelte';
-	import { AngleDownOutline } from 'flowbite-svelte-icons';
+	import { Button, Icons } from '$lib/flowbite';
 	import { twMerge } from 'tailwind-merge';
 	import { TokenLogo } from '$lib/components';
 	import { openCurrencySelector, onSelectCurrency as callback } from '$lib/store';
@@ -26,8 +25,8 @@
 
 <Button pill class={buttonClass} color={currency ? 'alternative' : 'primary'} on:click={openModal}>
 	{#if currency}
-		<TokenLogo size="xs" symbol={currency.symbol} />{currency.symbol}<AngleDownOutline />
+		<TokenLogo size="xs" symbol={currency.symbol} />{currency.symbol}<Icons.AngleDownOutline />
 	{:else}
-		Select Token<AngleDownOutline />
+		Select Token<Icons.AngleDownOutline />
 	{/if}
 </Button>

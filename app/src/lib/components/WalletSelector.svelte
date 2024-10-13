@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Avatar } from 'flowbite-svelte';
 	import { ethers } from 'ethers';
 	import { PUBLIC_COSMOS_CHAIN_ID } from '$env/static/public';
 	import { WalletLogo } from '$lib/components';

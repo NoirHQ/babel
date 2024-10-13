@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { TabItem } from 'flowbite-svelte';
+	import { TabItem } from '$lib/flowbite';
 
 	export let open = false;
 

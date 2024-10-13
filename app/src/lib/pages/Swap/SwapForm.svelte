@@ -1,10 +1,9 @@
 <script lang="ts">
 	import type { ContractTransaction } from 'ethers';
-	import { Button } from 'flowbite-svelte';
-	import { ArrowDownOutline } from 'flowbite-svelte-icons';
 	import { ethers } from 'ethers';
 	import { TabItem } from '$lib/components';
 	import { Ethereum, Cosmos } from '$lib/constants';
+	import { Button, Icons } from '$lib/flowbite';
 	import SwapCurrencyInput from './SwapCurrencyInput.svelte';
 	import { IERC20, UniswapV2Router02 } from '$lib/abi';
 	import { UniswapV2 } from '$lib/constants';
@@ -553,7 +552,7 @@
 			<div
 				class="flex h-full w-full items-center justify-center hover:bg-gray-400 hover:bg-opacity-5"
 			>
-				<ArrowDownOutline class="dark:text-white" />
+				<Icons.ArrowDownOutline class="dark:text-white" />
 			</div>
 		</button>
 		<SwapCurrencyInput

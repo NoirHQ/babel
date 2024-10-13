@@ -1,19 +1,19 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { twMerge } from 'tailwind-merge';
+	import { AccountModal } from '$lib/components';
 	import {
 		Avatar,
 		Button,
 		DarkMode,
+		Icons,
 		Modal,
 		Navbar,
 		NavBrand,
 		NavLi,
 		NavUl
-	} from 'flowbite-svelte';
-	import { BarsOutline } from 'flowbite-svelte-icons';
-	import { twMerge } from 'tailwind-merge';
-	import { AccountModal } from '$lib/components';
+	} from '$lib/flowbite';
 	import { account, openAccountModal } from '$lib/store';
 
 	$: activeUrl = $page.url.pathname;
@@ -62,7 +62,7 @@
 			class="ml-3 border-none p-1 md:hidden"
 			on:click|preventDefault={() => (open = true)}
 		>
-			<BarsOutline size="xl" /></button
+			<Icons.BarsOutline size="xl" /></button
 		>
 		<span
 			class="invisible ml-2 self-center whitespace-nowrap text-xl font-semibold

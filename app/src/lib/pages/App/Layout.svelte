@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Toast } from 'flowbite-svelte';
 	import { PolkadotJsProvider } from '$lib/components';
+	import { Toast } from '$lib/flowbite';
 	import { toast } from '$lib/store';
 	import Header from './Header.svelte';
 	import Footer from './Footer.svelte';

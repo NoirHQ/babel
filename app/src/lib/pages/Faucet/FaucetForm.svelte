@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Button } from 'flowbite-svelte';
 	import { GrayCard, TokenLogo } from '$lib/components';
+	import { Button } from '$lib/flowbite';
 	import { account } from '$lib/store';
 	import CaptchaV2 from './CaptchaV2.svelte';
 	import { PUBLIC_CAPTCHA_KEY } from '$env/static/public';
