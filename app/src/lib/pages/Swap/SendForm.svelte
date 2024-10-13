@@ -38,7 +38,8 @@
 		} else if ($accountProvider?.type === 'cosmos') {
 			(async () => {
 				try {
-					await transfer($account, recipient, value);
+					if ($account === null) return;
+					await transfer(currency, $account, recipient, value);
 				} catch (e) {
 					console.error(e);
 				}

@@ -7,6 +7,8 @@ import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx';
 import { get } from 'svelte/store';
 import { Buffer } from 'buffer';
 import { Cosmos } from '$lib/constants';
+import { Token } from '$lib/types';
+import { Babel } from '$lib/utils';
 
 async function sequenceOf(address: string): Promise<number> {
 	const {
@@ -24,7 +26,12 @@ export async function getSignerData(address: string): Promise<SignerData> {
 	};
 }
 
-async function sendTokens(sender: string, recipient: string, value: string): Promise<string> {
+async function sendTokens(
+	token: Token,
+	sender: string,
+	recipient: string,
+	value: string
+): Promise<string> {
 	if (get(accountProvider) === null) {
 		throw new Error('Cosmos provider is not unavailable');
 	}
@@ -37,7 +44,7 @@ async function sendTokens(sender: string, recipient: string, value: string): Pro
 		value: {
 			fromAddress: sender,
 			toAddress: recipient,
-			amount: [{ denom: 'azig', amount: BigInt(value).toString() }]
+			amount: [{ denom: Babel.denom(token), amount: BigInt(value).toString() }]
 		}
 	};
 
@@ -58,15 +65,13 @@ async function sendTokens(sender: string, recipient: string, value: string): Pro
 	return `0x${Buffer.from(hash).toString('hex')}`;
 }
 
-function transferCall(recipient: string, value: string): string {
-	let to;
-	if (recipient.startsWith('0x')) {
-		to = { Ethereum: recipient };
-	} else {
-		to = { Polkadot: recipient };
+function transferCall(token: Token, recipient: string, value: string): string {
+	const to = Babel.address(recipient);
+	const assetId = Babel.addressToAssetId(token.address);
+	if (token.symbol !== 'ZIG' && assetId === null) {
+		throw new Error('EVM-only erc20 cannot be transferred to non-EVM accounts.');
 	}
-
-	const call = get(api)?.tx.babel.transfer(to, value).inner.toHex();
+	const call = get(api)?.tx.babel.transfer(assetId, to, value).inner.toHex();
 	return Buffer.from(call.startsWith('0x') ? call.slice(2) : call, 'hex').toString('base64');
 }
 
@@ -89,7 +94,12 @@ export function getExecuteDispatchCall(sender: string, call: string) {
 	};
 }
 
-async function transferBalance(sender: string, recipient: string, value: string): Promise<string> {
+async function transferBalance(
+	token: Token,
+	sender: string,
+	recipient: string,
+	value: string
+): Promise<string> {
 	if (get(accountProvider) === null) {
 		throw new Error('Cosmos provider is not unavailable');
 	}
@@ -101,7 +111,7 @@ async function transferBalance(sender: string, recipient: string, value: string)
 	const client = await SigningCosmWasmClient.offline(offlineSigner);
 	const signerData = await getSignerData(sender);
 
-	const call = transferCall(recipient, value);
+	const call = transferCall(token, recipient, value);
 	const executeMsg = getExecuteDispatchCall(sender, call);
 
 	const fee = {
@@ -121,10 +131,15 @@ async function transferBalance(sender: string, recipient: string, value: string)
 	return `0x${Buffer.from(hash).toString('hex')}`;
 }
 
-export async function transfer(sender: string, recipient: string, value: string): Promise<string> {
+export async function transfer(
+	token: Token,
+	sender: string,
+	recipient: string,
+	value: string
+): Promise<string> {
 	if (recipient.startsWith('cosmos1')) {
-		return sendTokens(sender, recipient, value);
+		return sendTokens(token, sender, recipient, value);
 	} else {
-		return transferBalance(sender, recipient, value);
+		return transferBalance(token, sender, recipient, value);
 	}
 }
