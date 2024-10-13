@@ -36,7 +36,6 @@ use sc_client_api::{
 	BlockOf,
 };
 use sc_network_sync::SyncingService;
-use sc_rpc_api::DenyUnsafe;
 use sc_service::{Error as ServiceError, TaskManager};
 use sp_api::ProvideRuntimeApi;
 use sp_block_builder::BlockBuilder;
@@ -50,7 +49,7 @@ use std::{
 
 pub struct SpawnTasksParams<'a, B: BlockT, C, BE> {
 	pub config: sc_service::Configuration,
-	pub rpc_builder: Box<dyn Fn(DenyUnsafe) -> Result<RpcModule<()>, ServiceError>>,
+	pub rpc_builder: Box<dyn Fn() -> Result<RpcModule<()>, ServiceError>>,
 	pub task_manager: &'a mut TaskManager,
 	pub client: Arc<C>,
 	pub substrate_backend: Arc<BE>,
@@ -97,21 +96,28 @@ where
 		pubsub_notification_sinks,
 	} = params;
 
-	let rpc_port = config.rpc_addr.map(|addr| addr.port()).unwrap_or(config.rpc_port);
-	let prometheus_config = config.prometheus_config.take();
-
+	let addrs = config.rpc.addr.take();
+	let rpc_port = config.rpc.port;
 	// TODO: Make the Ethereum RPC port configurable.
-	let _ = config.rpc_addr.as_mut().map(|addr| addr.set_port(8545));
+	config.rpc.port = 8545;
 
 	let rpc = sc_service::start_rpc_servers(
-		&config,
+		&config.rpc,
+		None,
+		&config.tokio_handle,
 		rpc_builder,
 		Some(Box::new(fc_rpc::EthereumSubIdProvider)),
 	);
 	if rpc.is_ok() {
 		log::info!(
 			"Ethereum RPC started: {}",
-			config.rpc_addr.as_ref().map(|addr| addr.port()).unwrap_or(0)
+			config
+				.rpc
+				.addr
+				.as_ref()
+				.map(|addrs| addrs.first().map(|endpoint| endpoint.listen_addr.port()))
+				.flatten()
+				.unwrap_or(0)
 		);
 	} else {
 		log::warn!("Ethereum RPC not started");
@@ -184,8 +190,8 @@ where
 		),
 	);
 
-	let _ = config.rpc_addr.as_mut().map(|addr| addr.set_port(rpc_port));
-	config.prometheus_config = prometheus_config;
+	config.rpc.addr = addrs;
+	config.rpc.port = rpc_port;
 
 	Ok(config)
 }
