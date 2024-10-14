@@ -32,6 +32,7 @@ use alloc::{
 use codec::Encode;
 use cosmos_runtime_api::{ChainInfo, GasInfo, SimulateError, SimulateResponse, SimulateResult};
 use cosmos_sdk_proto::{cosmos::tx::v1beta1::Tx, traits::Message};
+use frame_babel::ethereum::AddressToAssetId;
 use frame_support::{
 	genesis_builder_helper::{build_state, get_preset},
 	traits::OnFinalize,
@@ -57,7 +58,7 @@ use sp_version::RuntimeVersion;
 
 // Local module imports
 use super::{
-	AccountId, Balance, Block, ConsensusHook, Ethereum, Executive, InherentDataExt, Nonce,
+	AccountId, Assets, Balance, Block, ConsensusHook, Ethereum, Executive, InherentDataExt, Nonce,
 	ParachainSystem, Runtime, RuntimeCall, RuntimeGenesisConfig, SessionKeys, System,
 	TransactionPayment, UncheckedExtrinsic, SLOT_DURATION, VERSION,
 };
@@ -241,6 +242,14 @@ impl_runtime_apis! {
 		}
 
 		fn account_code_at(address: H160) -> Vec<u8> {
+			const BALANCES: H160 = H160(hex_literal::hex!("0000000000000000000000000000000000000401"));
+			if address == BALANCES ||
+				Runtime::address_to_asset_id(address)
+					.map(|id| Assets::maybe_total_supply(id).is_some())
+					.unwrap_or(false)
+			{
+				return Vec::from(crate::dummy::IERC20);
+			}
 			pallet_evm::AccountCodes::<Runtime>::get(address)
 		}
 

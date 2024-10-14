@@ -11,6 +11,7 @@ pub mod apis;
 mod benchmarks;
 mod call;
 mod configs;
+mod dummy;
 mod weights;
 
 extern crate alloc;
