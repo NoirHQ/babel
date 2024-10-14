@@ -11,9 +11,9 @@
 <svelte:window bind:innerWidth />
 
 <PolkadotJsProvider>
-	<div class="relative h-dvh dark:bg-gray-900">
+	<div class="relative flex min-h-dvh flex-col dark:bg-gray-900">
 		<Header />
-		<div class="flex h-full flex-col items-center overflow-scroll md:h-[calc(100%-72px)]">
+		<div class="flex grow flex-col items-center md:h-[calc(100%-72px)]">
 			<slot />
 		</div>
 		{#if innerWidth >= 640}
