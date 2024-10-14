@@ -17,25 +17,25 @@ log = { version = "0.4", default-features = false }
 scale-info = { version = "2.11", default-features = false, features = ["derive"] }
 smallvec = "1.13"
 
-cosmos-runtime-api = { git = "https://github.com/noirhq/noir", branch = "release/0.4.x", default-features = false }
-cosmwasm-runtime-api = { git = "https://github.com/noirhq/noir", branch = "release/0.4.x", default-features = false }
-frame-babel = { git = "https://github.com/noirhq/noir", branch = "release/0.4.x", default-features = false, features = ["pallet"] }
-np-cosmos = { git = "https://github.com/noirhq/noir", branch = "release/0.4.x", default-features = false }
-np-ethereum = { git = "https://github.com/noirhq/noir", branch = "release/0.4.x", default-features = false }
-np-runtime = { git = "https://github.com/noirhq/noir", branch = "release/0.4.x", default-features = false, features = ["serde"] }
-pallet-cosmos = { git = "https://github.com/noirhq/noir", branch = "release/0.4.x", default-features = false }
-pallet-cosmos-types = { git = "https://github.com/noirhq/noir", branch = "release/0.4.x", default-features = false }
-pallet-cosmos-x-auth = { git = "https://github.com/noirhq/noir", branch = "release/0.4.x", default-features = false }
-pallet-cosmos-x-auth-signing = { git = "https://github.com/noirhq/noir", branch = "release/0.4.x", default-features = false }
-pallet-cosmwasm = { git = "https://github.com/noirhq/noir", branch = "release/0.4.x", default-features = false }
-pallet-multimap = { git = "https://github.com/noirhq/noir", branch = "release/0.4.x", default-features = false }
+cosmos-runtime-api = { git = "https://github.com/noirhq/noir", branch = "fallback-eth_getCode", default-features = false }
+cosmwasm-runtime-api = { git = "https://github.com/noirhq/noir", branch = "fallback-eth_getCode", default-features = false }
+frame-babel = { git = "https://github.com/noirhq/noir", branch = "fallback-eth_getCode", default-features = false, features = ["pallet"] }
+np-cosmos = { git = "https://github.com/noirhq/noir", branch = "fallback-eth_getCode", default-features = false }
+np-ethereum = { git = "https://github.com/noirhq/noir", branch = "fallback-eth_getCode", default-features = false }
+np-runtime = { git = "https://github.com/noirhq/noir", branch = "fallback-eth_getCode", default-features = false, features = ["serde"] }
+pallet-cosmos = { git = "https://github.com/noirhq/noir", branch = "fallback-eth_getCode", default-features = false }
+pallet-cosmos-types = { git = "https://github.com/noirhq/noir", branch = "fallback-eth_getCode", default-features = false }
+pallet-cosmos-x-auth = { git = "https://github.com/noirhq/noir", branch = "fallback-eth_getCode", default-features = false }
+pallet-cosmos-x-auth-signing = { git = "https://github.com/noirhq/noir", branch = "fallback-eth_getCode", default-features = false }
+pallet-cosmwasm = { git = "https://github.com/noirhq/noir", branch = "fallback-eth_getCode", default-features = false }
+pallet-multimap = { git = "https://github.com/noirhq/noir", branch = "fallback-eth_getCode", default-features = false }
 
-fp-evm = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4e", default-features = false }
-fp-rpc = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4e", default-features = false }
-fp-self-contained = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4e", default-features = false }
-pallet-base-fee = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4e", default-features = false }
-pallet-ethereum = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4e", default-features = false }
-pallet-evm = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4e", default-features = false }
+fp-evm = { git = "https://github.com/noirhq/frontier", branch = "fallback-eth_getCode", default-features = false }
+fp-rpc = { git = "https://github.com/noirhq/frontier", branch = "fallback-eth_getCode", default-features = false }
+fp-self-contained = { git = "https://github.com/noirhq/frontier", branch = "fallback-eth_getCode", default-features = false }
+pallet-base-fee = { git = "https://github.com/noirhq/frontier", branch = "fallback-eth_getCode", default-features = false }
+pallet-ethereum = { git = "https://github.com/noirhq/frontier", branch = "fallback-eth_getCode", default-features = false }
+pallet-evm = { git = "https://github.com/noirhq/frontier", branch = "fallback-eth_getCode", default-features = false }
 
 frame-benchmarking = { git = "https://github.com/paritytech/polkadot-sdk", branch = "stable2409", default-features = false, optional = true }
 frame-executive = { git = "https://github.com/paritytech/polkadot-sdk", branch = "stable2409", default-features = false }

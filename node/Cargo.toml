@@ -24,20 +24,20 @@ log = "0.4"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 
-cosmos-rpc = { git = "https://github.com/noirhq/noir", branch = "release/0.4.x" }
-cosmos-runtime-api = { git = "https://github.com/noirhq/noir", branch = "release/0.4.x" }
-cosmwasm-rpc = { git = "https://github.com/noirhq/noir", branch = "release/0.4.x" }
-cosmwasm-runtime-api = { git = "https://github.com/noirhq/noir", branch = "release/0.4.x" }
-frame-babel = { git = "https://github.com/noirhq/noir", branch = "release/0.4.x" }
+cosmos-rpc = { git = "https://github.com/noirhq/noir", branch = "fallback-eth_getCode" }
+cosmos-runtime-api = { git = "https://github.com/noirhq/noir", branch = "fallback-eth_getCode" }
+cosmwasm-rpc = { git = "https://github.com/noirhq/noir", branch = "fallback-eth_getCode" }
+cosmwasm-runtime-api = { git = "https://github.com/noirhq/noir", branch = "fallback-eth_getCode" }
+frame-babel = { git = "https://github.com/noirhq/noir", branch = "fallback-eth_getCode" }
 ziggurat-runtime = { path = "../runtime" }
 
-fc-api = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4e" }
-fc-db = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4e" }
-fc-mapping-sync = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4e", features = ["sql"] }
-fc-rpc = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4e", features = ["rpc-binary-search-estimate", "txpool"] }
-fc-rpc-core = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4e" }
-fp-rpc = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4e" }
-pallet-ethereum = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4e" }
+fc-api = { git = "https://github.com/noirhq/frontier", branch = "fallback-eth_getCode" }
+fc-db = { git = "https://github.com/noirhq/frontier", branch = "fallback-eth_getCode" }
+fc-mapping-sync = { git = "https://github.com/noirhq/frontier", branch = "fallback-eth_getCode", features = ["sql"] }
+fc-rpc = { git = "https://github.com/noirhq/frontier", branch = "fallback-eth_getCode", features = ["rpc-binary-search-estimate", "txpool"] }
+fc-rpc-core = { git = "https://github.com/noirhq/frontier", branch = "fallback-eth_getCode" }
+fp-rpc = { git = "https://github.com/noirhq/frontier", branch = "fallback-eth_getCode" }
+pallet-ethereum = { git = "https://github.com/noirhq/frontier", branch = "fallback-eth_getCode" }
 
 frame-benchmarking = { git = "https://github.com/paritytech/polkadot-sdk", branch = "stable2409" }
 frame-benchmarking-cli = { git = "https://github.com/paritytech/polkadot-sdk", branch = "stable2409" }
