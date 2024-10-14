@@ -36,6 +36,20 @@
 		scrollY < 10 ? 'bg-transparent dark:bg-transparent' : 'drop-shadow',
 		'fixed start-0 top-0 z-20 mx-0 w-full border-b border-none px-3 py-2 sm:px-4 md:py-1.5'
 	);
+
+	$: abbr = addressAbbreviation($account);
+
+	function addressAbbreviation(address: string | null): string | null {
+		if (address === null) {
+			return null;
+		} else if (address.startsWith('0x')) {
+			return address.slice(2, 4);
+		} else if (address.startsWith('cosmos1')) {
+			return address.slice(7, 9);
+		} else {
+			return address.slice(0, 2);
+		}
+	}
 </script>
 
 <svelte:window bind:scrollY />
@@ -66,7 +80,7 @@
 		<DarkMode />
 		{#if $account}
 			<Button pill color="none" class="p-0" on:click={() => ($openAccountModal = true)}
-				><Avatar>{$account?.slice(0, 2)}</Avatar></Button
+				><Avatar>{abbr}</Avatar></Button
 			>
 		{:else}
 			<Button pill class="ml-3" on:click={() => ($openAccountModal = true)}>Connect</Button>

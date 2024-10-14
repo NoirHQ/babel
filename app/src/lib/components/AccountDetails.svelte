@@ -4,6 +4,7 @@
 	import { tokenSymbolFromAddress } from '$lib/utils';
 
 	export let open = false;
+	let innerWidth = 0;
 
 	function copyAddressToClipboard(address: string | null) {
 		if (address === null) return;
@@ -16,7 +17,22 @@
 		}, 2000);
 		open = false;
 	}
+
+	$: truncatedAccount = truncateAddress($account, innerWidth);
+	$: truncatedAddresses = $addresses.map((a) => truncateAddress(a, innerWidth));
+
+	function truncateAddress(address: string | null, innerWidth: number): string | null {
+		if (address === null) return null;
+		const chars = innerWidth >= 768 ? 32 : 28;
+		if (address.length > chars) {
+			return `${address.slice(0, chars / 2)}...${address.slice(-(chars / 2))}`;
+		} else {
+			return address;
+		}
+	}
 </script>
+
+<svelte:window bind:innerWidth />
 
 <span class="px-6 pb-2 pt-4 text-sm font-semibold text-black dark:text-white">Account</span>
 <div class="flex flex-col items-stretch gap-px px-4">
@@ -26,7 +42,7 @@
 	>
 		<div class="flex items-center gap-3">
 			<TokenLogo symbol={tokenSymbolFromAddress($account)} size="md" />
-			<span class="overflow-hidden text-ellipsis text-sm">{$account}</span>
+			<span class="overflow-hidden text-ellipsis text-sm">{truncatedAccount}</span>
 		</div>
 	</button>
 </div>
@@ -45,7 +61,7 @@
 			</div>
 		</button>
 	{/if}
-	{#each $addresses as address}
+	{#each $addresses as address, i}
 		{#if address !== $account}
 			<button
 				class="h-16 bg-gray-100 px-4 py-3 first:rounded-t-xl
@@ -54,7 +70,9 @@
 			>
 				<div class="flex items-center gap-3">
 					<TokenLogo symbol={tokenSymbolFromAddress(address)} />
-					<span class="overflow-hidden text-ellipsis text-sm">{address}</span>
+					<span class="overflow-hidden text-ellipsis text-sm"
+						>{truncatedAddresses[i]}</span
+					>
 				</div>
 			</button>
 		{/if}
