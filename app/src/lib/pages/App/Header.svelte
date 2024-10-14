@@ -57,12 +57,15 @@
 <Navbar class={navbarClass} fluid={true}>
 	<NavBrand href="/" class="p-2 text-2xl">
 		<img src="/images/ziggurat.svg" alt="Ziggurat Logo" class="h-5 w-5 dark:invert" />
-		<button
+		<Button
 			color="alternative"
-			class="ml-3 border-none p-1 md:hidden"
-			on:click|preventDefault={() => (open = true)}
+			class="ml-3 border-none bg-transparent p-1 md:hidden"
+			on:click={(e) => {
+				e.preventDefault();
+				open = true;
+			}}
 		>
-			<Icons.BarsOutline size="xl" /></button
+			<Icons.BarsOutline size="xl" /></Button
 		>
 		<span
 			class="invisible ml-2 self-center whitespace-nowrap text-xl font-semibold
