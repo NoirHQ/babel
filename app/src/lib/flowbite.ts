@@ -19,7 +19,7 @@ export { default as Toast } from 'flowbite-svelte/Toast.svelte';
 
 import { default as AngleDownOutline } from 'flowbite-svelte-icons/AngleDownOutline.svelte';
 import { default as ArrowDownOutline } from 'flowbite-svelte-icons/ArrowDownOutline.svelte';
-import { default as BarsOutline } from 'flowbite-svelte-icons/ArrowDownOutline.svelte';
+import { default as BarsOutline } from 'flowbite-svelte-icons/BarsOutline.svelte';
 import { default as GithubSolid } from 'flowbite-svelte-icons/GithubSolid.svelte';
 
 export const Icons = {
