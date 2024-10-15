@@ -246,10 +246,10 @@
 				amount: [
 					{
 						denom: 'azig',
-						amount: '2100000000'
+						amount: '7000000000'
 					}
 				],
-				gas: '2100000000'
+				gas: '7000000000'
 			};
 
 			const txRaw = await client.sign($account, [approveMsg], fee, '', signerData);
@@ -293,10 +293,10 @@
 							amount: [
 								{
 									denom: 'azig',
-									amount: '15000000000'
+									amount: '50000000000'
 								}
 							],
-							gas: '15000000000'
+							gas: '50000000000'
 						};
 
 						let swapCall = $api.tx.babel.ethereumTransact(swapTx).inner.toHex();
@@ -339,10 +339,10 @@
 				amount: [
 					{
 						denom: 'azig',
-						amount: '15000000000'
+						amount: '50000000000'
 					}
 				],
-				gas: '15000000000'
+				gas: '50000000000'
 			};
 
 			let swapCall = $api.tx.babel.ethereumTransact(swapTx).inner.toHex();

@@ -52,10 +52,10 @@ async function sendTokens(
 		amount: [
 			{
 				denom: 'azig',
-				amount: '320000000'
+				amount: '1000000000'
 			}
 		],
-		gas: '320000000'
+		gas: '1000000000'
 	};
 
 	const txRaw = await client.sign(sender, [msgSend], fee, '', signerData);
@@ -118,10 +118,10 @@ async function transferBalance(
 		amount: [
 			{
 				denom: 'azig',
-				amount: '360000000'
+				amount: '1000000000'
 			}
 		],
-		gas: '360000000'
+		gas: '1000000000'
 	};
 
 	const txRaw = await client.sign(sender, [executeMsg], fee, '', signerData);
