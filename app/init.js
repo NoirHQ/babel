@@ -76,9 +76,7 @@ async function mint(args) {
 		.signAndSend(owner, (result) => {
 			if (result.status.isInBlock) {
 				unsubMint();
-				console.log(
-					`Minted      | ${amount} RAT to ${owner.address}.`
-				);
+				console.log(`Minted      | ${amount} RAT to ${owner.address}.`);
 				process.exit(0);
 			}
 		});
