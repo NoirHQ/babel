@@ -11,7 +11,7 @@
 	import { bech32 } from '@scure/base';
 	import { decodeAddress } from '@polkadot/util-crypto';
 
-	let assetId = -1;
+	let assetId = 0;
 	let address = $account ?? '';
 	let token = '';
 
