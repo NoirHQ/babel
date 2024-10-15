@@ -65,13 +65,18 @@
 			error = e.toString();
 		}
 	}
+
+	function goBack() {
+		fetchResult = '';
+		error = '';
+	}
 </script>
 
 <div>
 	{#if fetchResult === 'success'}
-		<Success />
+		<Success {goBack} />
 	{:else if fetchResult === 'error'}
-		<Error {error} />
+		<Error {goBack} {error} />
 	{:else}
 		<form class="flex flex-col gap-px px-2" on:submit|preventDefault={onSubmit}>
 			<GrayCard label="You'll receive" class="justify-between rounded-b-none">

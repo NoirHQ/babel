@@ -2,9 +2,7 @@
 	import { Button, P } from '$lib/flowbite';
 	import CheckCircle from './icons/CheckCircle.svelte';
 
-	function onGoBack() {
-		window.location.reload();
-	}
+	export let goBack: () => void;
 </script>
 
 <div class="w-full px-2">
@@ -14,7 +12,7 @@
 	<P size="xl" align="center" class="my-2 dark:text-white"
 		>Successfully sent Zigs to your address.</P
 	>
-	<Button size="xl" class="w-full rounded-2xl text-xl font-medium" on:click={onGoBack}
+	<Button size="xl" class="w-full rounded-2xl text-xl font-medium" on:click={goBack}
 		>Go back</Button
 	>
 </div>
