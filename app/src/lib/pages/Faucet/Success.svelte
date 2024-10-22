@@ -10,7 +10,7 @@
 		<CheckCircle />
 	</div>
 	<P size="xl" align="center" class="my-2 dark:text-white"
-		>Successfully sent Zigs to your address.</P
+		>Successfully sent ZIG to your address.</P
 	>
 	<Button size="xl" class="w-full rounded-2xl text-xl font-medium" on:click={goBack}
 		>Go back</Button
