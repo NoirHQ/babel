@@ -29,7 +29,7 @@
 	{placement}
 	autoclose
 	outsideclose
-	classDialog="p-0 h-screen"
+	classDialog="p-0 h-dvh"
 	classHeader="bg-transparent dark:bg-transparent"
 	classBody="p-0 md:p-0"
 	classBackdrop="bg-gray-900"

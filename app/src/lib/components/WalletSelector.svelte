@@ -189,7 +189,7 @@
 		>Ethereum (EIP-6963)</span
 	>
 {/if}
-<div class="flex flex-col items-stretch gap-px px-4">
+<div class="flex flex-col items-stretch gap-px px-4 pb-4">
 	{#each wallets.ethereum as wallet}
 		<button
 			class="h-16 bg-gray-100 px-4 py-3 first:rounded-t-xl
