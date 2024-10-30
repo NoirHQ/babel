@@ -18,8 +18,8 @@
 
 use ziggurat_runtime::opaque::Block;
 
+use crate::storage_override::StorageOverrideHandler;
 use fc_db::Backend;
-use fc_rpc::StorageOverrideHandler;
 use fp_rpc::EthereumRuntimeRPCApi;
 use sc_client_api::{HeaderBackend, StorageProvider};
 use sc_service::Configuration;

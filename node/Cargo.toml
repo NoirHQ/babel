@@ -39,6 +39,12 @@ fc-rpc-core = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4
 fp-rpc = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4e" }
 pallet-ethereum = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4e" }
 
+# storage_override
+ethereum = "0.15"
+ethereum-types = "0.14"
+fc-storage = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4e" }
+fp-storage = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4e" }
+
 frame-benchmarking = { git = "https://github.com/paritytech/polkadot-sdk", branch = "stable2409" }
 frame-benchmarking-cli = { git = "https://github.com/paritytech/polkadot-sdk", branch = "stable2409" }
 pallet-transaction-payment-rpc = { git = "https://github.com/paritytech/polkadot-sdk", branch = "stable2409" }

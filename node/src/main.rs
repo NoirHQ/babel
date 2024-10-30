@@ -8,6 +8,7 @@ mod command;
 mod eth;
 mod rpc;
 mod service;
+mod storage_override;
 
 fn main() -> sc_cli::Result<()> {
 	command::run()
