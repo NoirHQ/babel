@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { ethers } from 'ethers';
-	import { PUBLIC_COSMOS_CHAIN_ID } from '$env/static/public';
 	import { WalletLogo } from '$lib/components';
-	import { Ethereum } from '$lib/constants';
+	import { Cosmos, Ethereum } from '$lib/constants';
 	import { account, accountProvider } from '$lib/store';
 	import { setEthersProvider } from '$lib/utils';
 
@@ -56,12 +55,12 @@
 	}
 
 	async function enableCosmos(provider) {
-		await window.keplr.enable(PUBLIC_COSMOS_CHAIN_ID);
+		await window.keplr.enable(Cosmos.chainId);
 		accountProvider.set({
 			type: 'cosmos',
 			provider
 		});
-		const offlineSigner = window.keplr.getOfflineSigner(PUBLIC_COSMOS_CHAIN_ID);
+		const offlineSigner = window.keplr.getOfflineSigner(Cosmos.chainId);
 		const accounts = await offlineSigner.getAccounts();
 		if (accounts.length > 0) {
 			account.set(accounts[0].address);
