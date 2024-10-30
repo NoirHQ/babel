@@ -13,7 +13,7 @@
 		<div class="grid w-full grid-cols-4 px-3 md:px-6">
 			<p class="col-span-2 text-xs text-gray-500 dark:text-gray-400">WALLET NAME</p>
 			<p class="text-xs text-gray-500 dark:text-gray-400">CHAIN INFO</p>
-			<p class="text-xs text-gray-500 dark:text-gray-400">ADD NETWORK</p>
+			<p class="text-xs text-gray-500 dark:text-gray-400">REGISTER</p>
 		</div>
 		<ChainCard
 			image={'/images/keplr.png'}

@@ -1,4 +1,6 @@
 <script>
+	import Button from 'flowbite-svelte/Button.svelte';
+
 	export let image = '';
 	export let walletName = '';
 	export let chainName = '';
@@ -17,10 +19,7 @@
 		<p class="my-auto flex-1 text-sm dark:text-white">{denom}</p>
 		<p class="my-auto flex-1 text-xs text-gray-500 dark:text-gray-400">{chainName}</p>
 	</div>
-	<button
-		class="my-auto cursor-pointer text-left text-sm text-blue-600 hover:opacity-80 dark:text-blue-400"
-		on:click={onclick}
-	>
-		{'Add to Wallet >'}
-	</button>
+	<div class="my-auto">
+		<Button size="xs" class="mx-0" on:click={onclick}>Register</Button>
+	</div>
 </div>
