@@ -1,25 +1,14 @@
----
-# https://vitepress.dev/reference/default-theme-home-page
-layout: home
+# Welcome
+Babel에 오신 것을 환영합니다. Babel은 Web3 상호작용의 새로운 경계를 열어가고 있습니다. 현재의 탈중앙화된 환경에서는 다양한 블록체인 프로토콜이 각기 독특한 생태계를 제공하지만, 이를 효과적으로 사용하기 위해서는 각기 다른 도구와 지식이 필요할 때가 많습니다. Babel은 이러한 문제를 해결하기 위해 탄생했습니다.
 
-hero:
-  name: "Babel"
-  text: "Universal Protocol Translator"
-  tagline: My great project tagline
-  actions:
-    - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
-    - theme: alt
-      text: API Examples
-      link: /api-examples
+우리의 목표는 사용자와 개발자가 전통 웹에서처럼 Web3를 자유롭게 탐색할 수 있도록 돕는 것입니다. 과거 월드 와이드 웹(WWW)이 온라인 경험을 하나로 통합하고 단순화한 것처럼, Babel은 다양한 블록체인 간의 상호작용을 직관적이고 접근 가능하게 만들어줍니다.
 
-features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
----
+## What is Babel?
+Babel은 다양한 Web3 프로토콜과 생태계를 연결하는 혁신적인 블록체인으로, 서로 다른 프로토콜의 경계를 허물어주는 역할을 합니다. 일반 지갑 사용자와 고급 DApp 빌더 모두를 위해 설계된 Babel은 여러 프로토콜 간의 상호작용에서 추가적인 학습이나 새로운 도구 사용, 복잡한 코드 마이그레이션의 필요성을 없애줍니다. 현재 [Polkadot extrinsic](https://wiki.polkadot.network/docs/learn-transactions), [Ethereum transaction](https://ethereum.org/en/developers/docs/transactions/), [Cosmos message](https://tutorials.cosmos.network/academy/2-cosmos-concepts/4-messages.html)와 같은 주요 메시지 형식을 지원하고 있으며, 앞으로 Solana, Aptos, Sui 등 다양한 프로토콜에 대한 지원을 확장할 계획입니다. Babel은 이를 통해 크로스체인 상호작용과 개발을 간소화하여 여러 생태계 간에 일관성 있는 사용자 경험을 제공합니다.
+
+## Why Babel?
+기존의 웹에서는 월드 와이드 웹(WWW)을 통해 사용자들이 여러 사이트와 플랫폼을 자유롭게 이동할 수 있었습니다. 그러나 Web3에서는 프로토콜의 파편화로 인해 사용자와 개발자가 여러 지갑과 애플리케이션을 사용해야 하고, 각 프로토콜의 고유한 지식이 필요해지는 문제가 발생합니다. Babel은 다양한 프로토콜을 번역하여 이러한 파편화를 해결하고, 사용자와 개발자가 복잡한 절차 없이 생태계를 자유롭게 상호작용할 수 있도록 돕습니다.
+
+## A Universal Solution
+Babel은 각 프로토콜의 네이티브 환경에서 제공하는 성능을 완전히 충족시키지는 못할 수도 있지만, 매우 호환성 높은 실행 환경을 제공합니다. 이를 통해 코드 마이그레이션에 필요한 시간과 노력을 크게 줄일 수 있습니다. DApp 빌더에게는 단일 프로토콜 사용자 기반을 넘어, 다양한 블록체인 네트워크에 걸친 더 큰 사용자 풀에 접근할 수 있는 가능성을 열어줍니다. Babel에 DApp을 배포함으로써 개발자는 여러 프로토콜의 사용자들이 하나의 통합되고 사용자 친화적인 생태계에서 접근 가능한 DApp을 구축할 수 있습니다.
 
