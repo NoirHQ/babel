@@ -62,50 +62,50 @@ export default defineConfig({
     },
     kr: {
       label: 'Korean',
-      lang: 'kr',
-      link: '/kr',
+      lang: 'ko',
+      link: '/ko',
       themeConfig: {
         nav: [
-          { text: 'Home', link: '/kr' },
-          { text: 'Learn', link: '/kr/learn' },
-          { text: 'Use', link: '/kr/use' },
-          { text: 'Build', link: '/kr/build' }
+          { text: 'Home', link: '/ko' },
+          { text: 'Learn', link: '/ko/learn' },
+          { text: 'Use', link: '/ko/use' },
+          { text: 'Build', link: '/ko/build' }
         ],
 
         sidebar: {
-          '/kr/learn/': [
+          '/ko/learn/': [
             {
               text: 'Basics', items: [
-                { text: 'What is Babel?', link: '/kr/learn/basics/what-is-babel' },
-                { text: 'Why we need Babel', link: '/kr/learn/basics/why-we-need-babel' }
+                { text: 'What is Babel?', link: '/ko/learn/basics/what-is-babel' },
+                { text: 'Why we need Babel', link: '/ko/learn/basics/why-we-need-babel' }
               ]
             },
             {
               text: 'Advanced', items: [
-                { text: 'Unified Account', link: '/kr/learn/advanced/unified-account' },
-                { text: 'Multi VM', link: '/kr/learn/advanced/multi-vm' },
-                { text: 'Cross-Protocol Transaction', link: '/kr/learn/advanced/cross-protocol-transaction' }
+                { text: 'Unified Account', link: '/ko/learn/advanced/unified-account' },
+                { text: 'Multi VM', link: '/ko/learn/advanced/multi-vm' },
+                { text: 'Cross-Protocol Transaction', link: '/ko/learn/advanced/cross-protocol-transaction' }
               ]
             }
           ],
-          '/kr/use/': [
+          '/ko/use/': [
             {
               text: 'Tutorial',
               items: [
-                { text: 'Ziggurat Testnet', link: '/kr/use/tutorial/ziggurat-testnet' }
+                { text: 'Ziggurat Testnet', link: '/ko/use/tutorial/ziggurat-testnet' }
               ]
             },
             {
               text: 'Wallet',
-              link: '/kr/use/wallet'
+              link: '/ko/use/wallet'
             }
           ],
-          '/kr/build/': [
+          '/ko/build/': [
             {
               text: 'Examples',
               items: [
-                { text: 'Markdown Examples', link: '/kr/markdown-examples' },
-                { text: 'Runtime API Examples', link: '/kr/api-examples' }
+                { text: 'Markdown Examples', link: '/ko/markdown-examples' },
+                { text: 'Runtime API Examples', link: '/ko/api-examples' }
               ]
             }
           ]
