@@ -60,7 +60,7 @@ export default defineConfig({
         ]
       }
     },
-    kr: {
+    ko: {
       label: 'Korean',
       lang: 'ko',
       link: '/ko',
