@@ -1,4 +1,4 @@
-# Unified Account
+# 통합 계정
 
 ## Consolidating Fragmented Accounts Across Protocols
 

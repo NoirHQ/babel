@@ -20,16 +20,12 @@ export default defineConfig({
         sidebar: {
           '/learn/': [
             {
-              text: 'Basics', items: [
-                { text: 'What is Babel?', link: '/learn/basics/what-is-babel' },
-                { text: 'Why we need Babel', link: '/learn/basics/why-we-need-babel' }
-              ]
-            },
-            {
-              text: 'Advanced', items: [
-                { text: 'Unified Account', link: '/learn/advanced/unified-account' },
-                { text: 'Multi VM', link: '/learn/advanced/multi-vm' },
-                { text: 'Cross-Protocol Transaction', link: '/learn/advanced/cross-protocol-transaction' }
+              text: 'Components',
+              items: [
+                { text: 'Address', link: '/learn/address' },
+                { text: 'Unified Account', link: '/learn/unified-account' },
+                { text: 'Multi VM', link: '/learn/multi-vm' },
+                { text: 'Cross-Protocol Transaction', link: '/learn/cross-protocol-transaction' }
               ]
             }
           ],
@@ -75,16 +71,11 @@ export default defineConfig({
         sidebar: {
           '/ko/learn/': [
             {
-              text: 'Basics', items: [
-                { text: 'What is Babel?', link: '/ko/learn/basics/what-is-babel' },
-                { text: 'Why we need Babel', link: '/ko/learn/basics/why-we-need-babel' }
-              ]
-            },
-            {
-              text: 'Advanced', items: [
-                { text: 'Unified Account', link: '/ko/learn/advanced/unified-account' },
-                { text: 'Multi VM', link: '/ko/learn/advanced/multi-vm' },
-                { text: 'Cross-Protocol Transaction', link: '/ko/learn/advanced/cross-protocol-transaction' }
+              text: '구성 요소', items: [
+                { text: '주소', link: '/ko/learn/address' },
+                { text: '통합 계정', link: '/ko/learn/unified-account' },
+                { text: 'Multi VM', link: '/ko/learn/multi-vm' },
+                { text: 'Cross-Protocol Transaction', link: '/ko/learn/cross-protocol-transaction' }
               ]
             }
           ],
