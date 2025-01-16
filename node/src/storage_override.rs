@@ -1,4 +1,4 @@
-use fc_storage::overrides as overrides;
+use fc_storage::overrides;
 
 use std::sync::Arc;
 
@@ -69,75 +69,60 @@ where
 
 	fn current_block(&self, at: B::Hash) -> Option<BlockV2> {
 		match self.querier.storage_schema(at) {
-			Some(EthereumStorageSchema::V1) => {
-				SchemaV1StorageOverrideRef::new(&self.querier).current_block(at)
-			}
-			Some(EthereumStorageSchema::V2) => {
-				SchemaV2StorageOverrideRef::new(&self.querier).current_block(at)
-			}
-			Some(EthereumStorageSchema::V3) => {
-				SchemaV3StorageOverrideRef::new(&self.querier).current_block(at)
-			}
+			Some(EthereumStorageSchema::V1) =>
+				SchemaV1StorageOverrideRef::new(&self.querier).current_block(at),
+			Some(EthereumStorageSchema::V2) =>
+				SchemaV2StorageOverrideRef::new(&self.querier).current_block(at),
+			Some(EthereumStorageSchema::V3) =>
+				SchemaV3StorageOverrideRef::new(&self.querier).current_block(at),
 			None => self.fallback.current_block(at),
 		}
 	}
 
 	fn current_receipts(&self, at: B::Hash) -> Option<Vec<ReceiptV3>> {
 		match self.querier.storage_schema(at) {
-			Some(EthereumStorageSchema::V1) => {
-				SchemaV1StorageOverrideRef::new(&self.querier).current_receipts(at)
-			}
-			Some(EthereumStorageSchema::V2) => {
-				SchemaV2StorageOverrideRef::new(&self.querier).current_receipts(at)
-			}
-			Some(EthereumStorageSchema::V3) => {
-				SchemaV3StorageOverrideRef::new(&self.querier).current_receipts(at)
-			}
+			Some(EthereumStorageSchema::V1) =>
+				SchemaV1StorageOverrideRef::new(&self.querier).current_receipts(at),
+			Some(EthereumStorageSchema::V2) =>
+				SchemaV2StorageOverrideRef::new(&self.querier).current_receipts(at),
+			Some(EthereumStorageSchema::V3) =>
+				SchemaV3StorageOverrideRef::new(&self.querier).current_receipts(at),
 			None => self.fallback.current_receipts(at),
 		}
 	}
 
 	fn current_transaction_statuses(&self, at: B::Hash) -> Option<Vec<TransactionStatus>> {
 		match self.querier.storage_schema(at) {
-			Some(EthereumStorageSchema::V1) => {
-				SchemaV1StorageOverrideRef::new(&self.querier).current_transaction_statuses(at)
-			}
-			Some(EthereumStorageSchema::V2) => {
-				SchemaV2StorageOverrideRef::new(&self.querier).current_transaction_statuses(at)
-			}
-			Some(EthereumStorageSchema::V3) => {
-				SchemaV3StorageOverrideRef::new(&self.querier).current_transaction_statuses(at)
-			}
+			Some(EthereumStorageSchema::V1) =>
+				SchemaV1StorageOverrideRef::new(&self.querier).current_transaction_statuses(at),
+			Some(EthereumStorageSchema::V2) =>
+				SchemaV2StorageOverrideRef::new(&self.querier).current_transaction_statuses(at),
+			Some(EthereumStorageSchema::V3) =>
+				SchemaV3StorageOverrideRef::new(&self.querier).current_transaction_statuses(at),
 			None => self.fallback.current_transaction_statuses(at),
 		}
 	}
 
 	fn elasticity(&self, at: B::Hash) -> Option<Permill> {
 		match self.querier.storage_schema(at) {
-			Some(EthereumStorageSchema::V1) => {
-				SchemaV1StorageOverrideRef::new(&self.querier).elasticity(at)
-			}
-			Some(EthereumStorageSchema::V2) => {
-				SchemaV2StorageOverrideRef::new(&self.querier).elasticity(at)
-			}
-			Some(EthereumStorageSchema::V3) => {
-				SchemaV3StorageOverrideRef::new(&self.querier).elasticity(at)
-			}
+			Some(EthereumStorageSchema::V1) =>
+				SchemaV1StorageOverrideRef::new(&self.querier).elasticity(at),
+			Some(EthereumStorageSchema::V2) =>
+				SchemaV2StorageOverrideRef::new(&self.querier).elasticity(at),
+			Some(EthereumStorageSchema::V3) =>
+				SchemaV3StorageOverrideRef::new(&self.querier).elasticity(at),
 			None => self.fallback.elasticity(at),
 		}
 	}
 
 	fn is_eip1559(&self, at: B::Hash) -> bool {
 		match self.querier.storage_schema(at) {
-			Some(EthereumStorageSchema::V1) => {
-				SchemaV1StorageOverrideRef::new(&self.querier).is_eip1559(at)
-			}
-			Some(EthereumStorageSchema::V2) => {
-				SchemaV2StorageOverrideRef::new(&self.querier).is_eip1559(at)
-			}
-			Some(EthereumStorageSchema::V3) => {
-				SchemaV3StorageOverrideRef::new(&self.querier).is_eip1559(at)
-			}
+			Some(EthereumStorageSchema::V1) =>
+				SchemaV1StorageOverrideRef::new(&self.querier).is_eip1559(at),
+			Some(EthereumStorageSchema::V2) =>
+				SchemaV2StorageOverrideRef::new(&self.querier).is_eip1559(at),
+			Some(EthereumStorageSchema::V3) =>
+				SchemaV3StorageOverrideRef::new(&self.querier).is_eip1559(at),
 			None => self.fallback.is_eip1559(at),
 		}
 	}
