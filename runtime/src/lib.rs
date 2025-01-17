@@ -314,6 +314,9 @@ mod runtime {
 	#[runtime::pallet_index(62)]
 	pub type BaseFee = pallet_base_fee;
 
+	#[runtime::pallet_index(90)]
+	pub type Solana = pallet_solana;
+
 	#[runtime::pallet_index(128)]
 	pub type AddressMap = pallet_multimap<Instance1>;
 	#[runtime::pallet_index(129)]

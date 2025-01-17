@@ -75,6 +75,7 @@ use parachains_common::message_queue::{NarrowOriginToSibling, ParaIdToSibling};
 use polkadot_runtime_common::{
 	xcm_sender::NoPriceForMessageDelivery, BlockHashCount, SlowAdjustingFeeUpdate,
 };
+use solana_sdk::{hash::Hash as SolanaHash, pubkey::Pubkey};
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_core::{ConstU128, H160, U256};
 use sp_runtime::{
@@ -626,4 +627,47 @@ impl frame_babel::Config for Runtime {
 	type AddressMap = AddressMap;
 	type AssetMap = AssetMap;
 	type Balance = Balance;
+}
+
+pub struct AccountIdConversion;
+impl Convert<Pubkey, AccountId> for AccountIdConversion {
+	fn convert(pubkey: Pubkey) -> AccountId {
+		AccountId::new(pubkey.to_bytes())
+	}
+}
+
+impl ConvertBack<Pubkey, AccountId> for AccountIdConversion {
+	fn convert_back(account_id: AccountId) -> Pubkey {
+		Pubkey::from(<[u8; 32]>::from(account_id))
+	}
+}
+
+pub struct HashConversion;
+impl Convert<SolanaHash, Hash> for HashConversion {
+	fn convert(hash: SolanaHash) -> Hash {
+		Hash::from(hash.to_bytes())
+	}
+}
+impl ConvertBack<SolanaHash, Hash> for HashConversion {
+	fn convert_back(hash: Hash) -> SolanaHash {
+		SolanaHash::new_from_array(hash.0)
+	}
+}
+
+parameter_types! {
+	pub const ScanResultsLimitBytes: Option<u32> = Some(10 * 1024 * 1024);
+}
+
+impl pallet_solana::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type AccountIdConversion = AccountIdConversion;
+	type HashConversion = HashConversion;
+	type Balance = Balance;
+	type Currency = Balances;
+	type DecimalMultiplier = ConstU128<1_000_000_000>;
+	type BlockhashQueueMaxAge = ConstU64<20>;
+	type MaxPermittedDataLength = ConstU32<{ 10 * 1024 * 1024 }>;
+	type GenesisTimestamp = ConstU64<1584336540_000>;
+	type ScanResultsLimitBytes = ScanResultsLimitBytes;
+	type TransactionCacheLimit = ConstU32<10000>;
 }

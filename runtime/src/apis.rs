@@ -638,4 +638,12 @@ impl_runtime_apis! {
 			}
 		}
 	}
+
+	impl solana_runtime_api::SolanaRuntimeApi<Block> for Runtime {
+		fn call(method: String, params: Vec<u8>) -> Result<Vec<u8>, solana_runtime_api::error::Error> {
+			match method.as_str() {
+				_ => return Err(solana_runtime_api::error::Error::UnsupportedMethod),
+			}
+		}
+	}
 }

@@ -37,7 +37,9 @@ pallet-base-fee = { git = "https://github.com/polkadot-evm/frontier", rev = "aac
 pallet-ethereum = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4e", default-features = false }
 pallet-evm = { git = "https://github.com/polkadot-evm/frontier", rev = "aacf5a4e", default-features = false }
 
-pallet-solana = { git = "https://github.com/noirhq/noir", branch = "fix-vec", default-features = false }
+pallet-solana = { git = "https://github.com/noirhq/noir", rev = "f3c691d4", default-features = false }
+solana-runtime-api = { git = "https://github.com/noirhq/noir", rev = "f3c691d4", default-features = false }
+solana-sdk = { git = "https://github.com/noirhq/solana-sdk", branch = "hashbrown-workaround", default-features = false, features = ["borsh", "full"] }
 
 frame-benchmarking = { git = "https://github.com/paritytech/polkadot-sdk", branch = "stable2409", default-features = false, optional = true }
 frame-executive = { git = "https://github.com/paritytech/polkadot-sdk", branch = "stable2409", default-features = false }
@@ -139,6 +141,7 @@ std = [
 	"pallet-multimap/std",
 	"pallet-message-queue/std",
 	"pallet-session/std",
+	"pallet-solana/std",
 	"pallet-sudo/std",
 	"pallet-timestamp/std",
 	"pallet-transaction-payment-rpc-runtime-api/std",
@@ -149,6 +152,8 @@ std = [
 	"polkadot-parachain-primitives/std",
 	"polkadot-runtime-common/std",
 	"scale-info/std",
+	"solana-runtime-api/std",
+	"solana-sdk/std",
 	"sp-api/std",
 	"sp-block-builder/std",
 	"sp-consensus-aura/std",
@@ -181,6 +186,7 @@ runtime-benchmarks = [
 	"pallet-ethereum/runtime-benchmarks",
 	"pallet-evm/runtime-benchmarks",
 	"pallet-message-queue/runtime-benchmarks",
+	"pallet-solana/runtime-benchmarks",
 	"pallet-sudo/runtime-benchmarks",
 	"pallet-timestamp/runtime-benchmarks",
 	"pallet-xcm/runtime-benchmarks",
@@ -210,6 +216,7 @@ try-runtime = [
 	"pallet-evm/try-runtime",
 	"pallet-message-queue/try-runtime",
 	"pallet-session/try-runtime",
+	"pallet-solana/try-runtime",
 	"pallet-sudo/try-runtime",
 	"pallet-timestamp/try-runtime",
 	"pallet-transaction-payment/try-runtime",
